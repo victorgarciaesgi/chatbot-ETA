@@ -1,0 +1,16 @@
+{
+  "name": "botproto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "start"
+  },
+  "author": "Victor",
+  "license": "MIT",
+  "dependencies": {
+    "botbuilder": "^3.9.1",
+    "node-fetch": "^1.7.3",
+    "restify": "^5.2.0"
+  }
+}
