@@ -21,13 +21,8 @@ SERVER.post("/api/messages", CONNECTOR.listen());
 
 var bot = new BOTBUILDER.UniversalBot(CONNECTOR, [
   function(session) {
-
-    return session.beginDialog('alarm:home');
+    return session.beginDialog('parcours:home');
   },
-  function(session, data) {
-    session.endConversation(`Résumé de votre demande:
-    ${JSON.stringify(data)}`);
-  }
 ]);
 
 const hotel = require('./dialogs/parcours.js')

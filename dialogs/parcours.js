@@ -1,43 +1,78 @@
-const BOTBUILDER = require("botbuilder");
+const axios = require('axios');
 
-const library = new BOTBUILDER.Library('parcours');
+const builder = require("botbuilder");
+
+const library = new builder.Library('parcours');
+
+const API_KEY = "AIzaSyBmhwuT3aPc5t2h1X1rPK0JzXxa8waqaAE";
+const API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?language=fr-FR&";
+const transport_mode= ['driving', 'bicycling', 'walking'];
+const transport_mode_verbose= ['Voiture', 'Vélo', 'A pied'];
 
 library.dialog('home', [
-  function (session) {
-    BOTBUILDER.Prompts.choice(session, `Que voulez vous faire?`,
-  "Créer une alarme|Liste de mes alarmes|Alarmes en cours|Alarmes finies", {listStyle: BOTBUILDER.ListStyle.button});
+  (session) => {
+    builder.Prompts.choice(session, `Bienvenue sur Chatbot ETA. Que voulez vous faire?`,
+      ["Calculer un itinéraire", "Historique"],
+      {listStyle: builder.ListStyle.button});
   },
-  function (session, results, next) {
-    console.log(results.response.entity);
-    switch(results.response.entity){
-      case "Créer une alarme" :
-        return session.beginDialog('createAlarm');
+  (session, results, next) => {
+    switch(results.response.index){
+      case 0: 
+        session.beginDialog('eta');
         break;
-      case "Liste de mes alarmes":
-        return session.beginDialog('infoAlarm');
+      case 1:
+        session.beginDialog('history');
         break;
-      case "Alarmes en cours":
-        var alarms = session.userData.alarms;
-        var today = new Date(date.now());
-        session.send(`Liste des alarmes finies: <br> 
-        ${alarms.filter(alarm => alarm.time > today)
-                .map(alarm => `- ${alarm.name} : ${new Date(alarm.time).toLocaleTimeString()} <br>`) }`)
-        next();
-        break;
-      case "Alarmes finies":
-        var alarms = session.userData.alarms;
-        var today = new Date(date.now());
-        session.send(`Liste des alarmes finies: <br> 
-        ${alarms.filter(alarm => alarm.time <= today)
-                .map(alarm => `- ${alarm.name} : ${new Date(alarm.time).toLocaleTimeString()} <br>`) }`)
-        next();
+      default:
+        session.beginDialog('home');
         break;
     }
   },
-  function (session, results){
-    session.beginDialog('home');
-  }
-  
+])
+
+library.dialog('eta', [
+  (session) => {
+    builder.Prompts.choice(session, `Quel moyen de transport voulez-vous utiliser?`,
+    transport_mode_verbose,
+      {listStyle: builder.ListStyle.button});
+  },
+  (session, results, next) => {
+    if (results.response.index == 3) {
+      session.beginDialog('home');
+    } else {
+      session.userData.transportMode = results.response.index;
+      next();
+    }
+  },
+  (session) => {
+    builder.Prompts.text(session, 'Veuillez indiquez votre emplacement de départ (Ville, adresse..)')
+  },
+  (session, results, next) => {
+    session.userData.origin = results.response;
+    session.send(`Départ: ${results.response}`);
+    next();
+  },
+  (session) => {
+    builder.Prompts.text(session, 'Votre adresse de destination');
+  },
+  (session, results, next) => {
+    session.userData.destination = results.response;
+    session.send(`Calcul de l'itinéraire de "${session.userData.origin}" à "${results.response}". Mode: ${transport_mode_verbose[session.userData.transportMode]}`);
+    let url = encodeURI(`${API_URL}origins=${session.userData.origin}&destinations=${session.userData.destination}&mode=${transport_mode[session.userData.transportMode]}&key=${API_KEY}`);
+    console.log(url);
+    axios.get(url).then((response) => {
+      console.log(response.data.rows);
+      if (response.data.status == "OK") {
+        let elements = response.data.rows[0].elements[0];
+        let distance = elements.distance.text;
+        let duration = elements.duration.text;
+        let output = `Le trajet est de ${distance} et durera ${duration}`;
+        session.send(output);
+        next();
+      }
+    })
+    
+  },
 ])
 
 
