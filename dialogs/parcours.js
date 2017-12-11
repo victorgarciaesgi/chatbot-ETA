@@ -6,8 +6,8 @@ const library = new builder.Library('parcours');
 
 const API_KEY = "AIzaSyBmhwuT3aPc5t2h1X1rPK0JzXxa8waqaAE";
 const API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?language=fr-FR&";
-const transport_mode= ['driving', 'bicycling', 'walking'];
-const transport_mode_verbose= ['Voiture', 'Vélo', 'A pied'];
+const transport_mode= ['driving', 'bicycling', 'walking', 'transit'];
+const transport_mode_verbose= ['Voiture', 'Vélo', 'A pied', 'En transport en commun'];
 
 library.dialog('home', [
   (session) => {
@@ -37,7 +37,7 @@ library.dialog('eta', [
       {listStyle: builder.ListStyle.button});
   },
   (session, results, next) => {
-    if (results.response.index == 3) {
+    if (results.response.index == 4) {
       session.beginDialog('home');
     } else {
       session.userData.transportMode = results.response.index;
