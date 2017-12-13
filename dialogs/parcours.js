@@ -1,11 +1,12 @@
 const axios = require('axios');
-
 const builder = require("botbuilder");
 
 const library = new builder.Library('parcours');
 
-const API_KEY = "AIzaSyBmhwuT3aPc5t2h1X1rPK0JzXxa8waqaAE";
-const API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?language=fr-FR&";
+const DISTANCE_API_KEY = "AIzaSyBmhwuT3aPc5t2h1X1rPK0JzXxa8waqaAE";
+const EMBED_API_KEY = "AIzaSyARCN99yjvw6AiBGQ-Ng7qVJjYyK97X2pM";
+const DISTANCE_API_URL = "https://maps.googleapis.com/maps/api/distancematrix/json?language=fr-FR&";
+const EMBED_API_URL = "https://www.google.com/maps/embed/v1/direction?key=YOUR_API_KEY&origin=Oslo+Norway&destination=Telemark+Norway";
 const transport_mode= ['driving', 'bicycling', 'walking'];
 const transport_mode_verbose= ['Voiture', 'Vélo', 'A pied'];
 
@@ -58,7 +59,7 @@ library.dialog('eta', [
   (session, results, next) => {
     session.userData.destination = results.response;
     session.send(`Calcul de l'itinéraire de "${session.userData.origin}" à "${results.response}". Mode: ${transport_mode_verbose[session.userData.transportMode]}`);
-    let url = encodeURI(`${API_URL}origins=${session.userData.origin}&destinations=${session.userData.destination}&mode=${transport_mode[session.userData.transportMode]}&key=${API_KEY}`);
+    let url = encodeURI(`${API_URL}origins=${session.userData.origin}&destinations=${session.userData.destination}&mode=${transport_mode[session.userData.transportMode]}&key=${DISTANCE_API_KEY}`);
     console.log(url);
     axios.get(url).then((response) => {
       console.log(response.data.rows);

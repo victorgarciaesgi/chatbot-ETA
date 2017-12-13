@@ -25,6 +25,6 @@ var bot = new BOTBUILDER.UniversalBot(CONNECTOR, [
   },
 ]);
 
-const hotel = require('./dialogs/parcours.js')
+const parcours = require('./dialogs/parcours.js')
 
-bot.library(hotel);
+bot.library(parcours);
