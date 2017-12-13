@@ -38,7 +38,7 @@ library.dialog('eta', [
       {listStyle: builder.ListStyle.button});
   },
   (session, results, next) => {
-    if (results.response.index == 3) {
+    if (results.response.index == 4) {
       session.beginDialog('home');
     } else {
       session.userData.transportMode = results.response.index;
