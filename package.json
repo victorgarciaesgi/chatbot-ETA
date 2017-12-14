@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "start"
+    "test": "start",
+    "start": "node server.js"
   },
   "author": "Victor",
   "license": "MIT",
@@ -14,6 +15,6 @@
     "axios": "^0.17.1",
     "botbuilder": "^3.9.1",
     "node-fetch": "^1.7.3",
-    "restify": "^5.2.0"
+    "restify": "^5.2.0",
   }
 }
