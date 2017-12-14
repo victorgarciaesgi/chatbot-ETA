@@ -10,8 +10,8 @@ SERVER.listen(PORT, () => {
 });
 
 const CONNECTOR = new BOTBUILDER.ChatConnector({
-  appId: process.env.APP_ID,
-  appPassword: process.env.APP_SECRET
+  appId: process.env.MICROSOFT_APP_ID,
+  appPassword: process.env.MICROSOFT_APP_PASSWORD
 });
 
 SERVER.post("/api/messages", CONNECTOR.listen());
