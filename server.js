@@ -3,9 +3,6 @@ const BOTBUILDER = require("botbuilder");
 const SERVER = RESTIFY.createServer();
 const PORT = process.env.PORT || 3887;
 
-const API_KEY = "AIzaSyBmhwuT3aPc5t2h1X1rPK0JzXxa8waqaAE";
-
-
 
 
 SERVER.listen(PORT, () => {
