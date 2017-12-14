@@ -59,7 +59,7 @@ library.dialog('eta', [
   (session, results, next) => {
     session.userData.destination = results.response;
     session.send(`Calcul de l'itinéraire de "${session.userData.origin}" à "${results.response}". Mode: ${transport_mode_verbose[session.userData.transportMode]}`);
-    let url = encodeURI(`${API_URL}origins=${session.userData.origin}&destinations=${session.userData.destination}&mode=${transport_mode[session.userData.transportMode]}&key=${DISTANCE_API_KEY}`);
+    let url = encodeURI(`${DISTANCE_API_URL}origins=${session.userData.origin}&destinations=${session.userData.destination}&mode=${transport_mode[session.userData.transportMode]}&key=${DISTANCE_API_KEY}`);
     console.log(url);
     axios.get(url).then((response) => {
       console.log(response.data.rows);
