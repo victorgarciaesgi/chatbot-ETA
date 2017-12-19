@@ -42,6 +42,7 @@ const EMBED_API_URL = "https://www.google.com/maps/embed/v1/direction?key=YOUR_A
 bot.dialog('SearchTime', [
   (session, args, next) => {
     if (!args.loop) {
+      console.log( args.intent.entities);
       let originEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Origin');
       let destinationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Destination');
       let transportModeEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'TransportModeV2');
