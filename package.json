@@ -5,17 +5,20 @@
   "main": "app.js",
   "scripts": {
     "test": "start",
-    "start": "node app.js"
+    "start": "nodemon dist/app.js"
   },
   "author": "Victor",
   "license": "MIT",
   "dependencies": {
     "@types/axios": "^0.14.0",
     "@types/googlemaps": "^3.30.0",
+    "@types/lodash": "^4.14.91",
     "axios": "^0.17.1",
-    "botbuilder": "^3.9.1",
+    "botbuilder": "3.13.1",
+    "concurrently": "^3.5.1",
     "dotenv-extended": "^2.0.1",
-    "node-fetch": "^1.7.3",
-    "restify": "^5.2.0"
+    "lodash": "^4.17.4",
+    "restify": "6.3.4",
+    "typescript": "^2.6.2"
   }
 }
