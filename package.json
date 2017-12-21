@@ -1,11 +1,10 @@
 {
-  "name": "botproto",
+  "name": "chatbot_eta",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "start",
-    "start": "nodemon dist/app.js"
+    "start": "concurrently --kill-others \" tsc -w \" \"nodemon dist/app.js \" "
   },
   "author": "Victor",
   "license": "MIT",
@@ -18,6 +17,7 @@
     "concurrently": "^3.5.1",
     "dotenv-extended": "^2.0.1",
     "lodash": "^4.17.4",
+    "nodemon": "^1.14.1",
     "restify": "6.3.4",
     "typescript": "^2.6.2"
   }
