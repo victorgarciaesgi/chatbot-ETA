@@ -1,5 +1,6 @@
 import * as builder from 'botbuilder';
 import { Apis, transport_mode_gmaps } from './Apis';
+import {capitalize} from 'lodash';
 
 const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun"];
 
@@ -65,8 +66,8 @@ SearchTime.dialog('SearchTime', [
   }, 
   async (session, next) => {
     let params = session.userData.searchParams;
+    session.send(`Recherche du temps estimé pour aller de ${capitalize(params.origin)} à ${capitalize(params.destination)} (${transport_mode_verbose[params.transportMode]})`)
     let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
-
     if (response.success) {
       let output = `Il vous faudra ${response.duration}`;
       session.send(output);

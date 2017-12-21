@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const DISTANCE_API_KEY: string = process.env.DISTANCE_API_KEY;
-const EMBED_API_KEY: string = process.env.DISTANCE_API_URL;
+const EMBED_API_KEY: string = process.env.EMBED_API_KEY;
 const DISTANCE_API_URL: string = "https://maps.googleapis.com/maps/api/distancematrix/json?language=fr-FR&";
 const EMBED_API_URL: string = "https://www.google.com/maps/embed/v1/direction?key=YOUR_API_KEY&origin=Oslo+Norway&destination=Telemark+Norway";
 
