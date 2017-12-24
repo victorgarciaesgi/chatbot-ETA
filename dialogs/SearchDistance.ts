@@ -66,9 +66,9 @@ SearchDistance.dialog('SearchDistance', [
     let params = session.userData.searchParams;
     // session.send(`Recherche du temps estimé pour aller de ${capitalize(params.origin)} à ${capitalize(params.destination)} (${transport_mode_verbose[params.transportMode]})`);
 
-    let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
+    let response = await Apis.getDistance(params.origin, params.destination, params.transportMode);
     if (response.success) {
-      let output = `Il vous faudra ${response.duration}`;
+      let output = `Il vous faudra ${response.distance}`;
       session.send(output);
     }
     session.endDialog();

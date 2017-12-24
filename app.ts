@@ -17,23 +17,19 @@ const connector = new builder.ChatConnector({
 
 server.post("/api/messages", connector.listen());
 
-var bot = new builder.UniversalBot(connector, [(session) => {
+const bot = new builder.UniversalBot(connector, [(session) => {
     session.send(`Je n'ai pas compris ce que vous avez dit`);
 }]);
 
-var recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL).onEnabled(function (context, callback) {
-  let enabled = context.dialogStack().length == 0;
-  callback(null, enabled);
+const recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL).onEnabled(function (context, callback) {
+  callback(null, context.dialogStack().length == 0);
 });
 bot.recognizer(recognizer);
-
 
 // Dialogs
 
 import { SearchTime } from './dialogs/SearchTime';
 import { SearchDistance } from './dialogs/SearchDistance';
-
-
 
 
 bot.library(SearchTime);

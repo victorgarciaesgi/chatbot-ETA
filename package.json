@@ -2,9 +2,9 @@
   "name": "chatbot_eta",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "dist/app.js",
   "scripts": {
-    "start": "concurrently --kill-others \" tsc -w \" \"nodemon dist/app.js \" "
+    "start": "concurrently --kill-others \" tsc -w \" \"nodemon\" "
   },
   "author": "Victor",
   "license": "MIT",

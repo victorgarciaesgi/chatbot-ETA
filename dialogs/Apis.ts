@@ -40,11 +40,8 @@ export namespace Apis {
 
 
 
-interface ApiResponse {
+interface ApiResponse <T , R> {
   success: boolean,
-  data?: {
-    distance?: string,
-    duration?: string,
-  },
+  data?: {},
   message?: string,
 }
