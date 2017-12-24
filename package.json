@@ -16,7 +16,6 @@
     "botbuilder": "3.13.1",
     "concurrently": "^3.5.1",
     "dotenv-extended": "^2.0.1",
-    "global-tunnel": "^1.2.0",
     "lodash": "^4.17.4",
     "nodemon": "^1.14.1",
     "restify": "6.3.4",

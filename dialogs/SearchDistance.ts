@@ -4,9 +4,9 @@ import { capitalize } from 'lodash';
 
 const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun"];
 
-export const SearchTime = new builder.Library('SearchTime');
+export const SearchDistance = new builder.Library('SearchDistance');
 
-SearchTime.dialog('SearchTime', [
+SearchDistance.dialog('SearchDistance', [
   (session, args, next) => {
     if (!args.loop) {
       let originEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Origin');
@@ -45,7 +45,7 @@ SearchTime.dialog('SearchTime', [
 
     if (!session.userData.searchParams.destination) {
       if (asked) {
-        session.replaceDialog('SearchTime', { loop: true });
+        session.replaceDialog('SearchDistance', { loop: true });
       } else {
         session.userData.searchParams.destination = results.response;
         asked = true;
@@ -54,7 +54,7 @@ SearchTime.dialog('SearchTime', [
 
     if (session.userData.searchParams.transportMode == null) {
       if (asked) {
-        session.replaceDialog('SearchTime', { loop: true });
+        session.replaceDialog('SearchDistance', { loop: true });
       } else {
         session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
         next();
@@ -75,7 +75,7 @@ SearchTime.dialog('SearchTime', [
   }
 
 ]).triggerAction({
-  matches: "SearchTime"
+  matches: "SearchDistance"
 });
 
 
