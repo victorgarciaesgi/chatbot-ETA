@@ -1,8 +1,7 @@
 // Config
-require('dotenv-extended').load();
 import * as RESTIFY from "restify";
 import * as builder from "botbuilder";
-import * as globalTunnel from "global-tunnel";
+require('dotenv-extended').load();
 const server = RESTIFY.createServer();
 const PORT = process.env.PORT || 3887;
 
@@ -19,6 +18,7 @@ server.post("/api/messages", connector.listen());
 
 const bot = new builder.UniversalBot(connector, [(session) => {
     session.send(`Je n'ai pas compris ce que vous avez dit`);
+    session.endDialog();
 }]);
 
 const recognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL).onEnabled(function (context, callback) {
@@ -40,3 +40,19 @@ bot.dialog('Help', function (session) {
 }).triggerAction({
   matches: 'Help'
 });
+
+// import * as googleMapsApi from '@google/maps';
+
+// const googleMaps = googleMapsApi.createClient({
+//   key: process.env.GOOGLE_API_KEY,
+//   langage: 'fr-FR',
+//   Promise: Promise
+// });
+
+// googleMaps.distanceMatrix({
+//   origins: 'paris',
+//   destinations: 'marseille',
+//   mode: 'driving',
+// }).asPromise().then((response) => {
+//   console.log(response.json.rows[0]);
+// })

@@ -1,6 +1,7 @@
 import * as builder from 'botbuilder';
 import { Apis, transport_mode_gmaps } from './Apis';
 import { capitalize } from 'lodash';
+import * as util from 'util';
 
 const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun"];
 
@@ -11,11 +12,11 @@ SearchTime.dialog('SearchTime', [
     if (!args.loop) {
       let originEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Origin');
       let destinationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Destination');
-      let transportModeEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'TransportModeV2');
+      let transportModeEntity = <any>builder.EntityRecognizer.findEntity(args.intent.entities, 'TransportModeV2');
       session.userData.searchParams = {
         origin: originEntity ? originEntity.entity : null,
         destination: destinationEntity ? destinationEntity.entity : null,
-        transportMode: transportModeEntity ? transport_mode_gmaps.indexOf(transportModeEntity.resolution.values[0]) : null
+        transportMode: transportModeEntity ? transportModeEntity.resolution.values[0] : null
       };
     };
     if (!session.userData.searchParams.origin) {
@@ -56,6 +57,8 @@ SearchTime.dialog('SearchTime', [
       if (asked) {
         session.replaceDialog('SearchTime', { loop: true });
       } else {
+        console.log(JSON.stringify(results.response.index))
+        console.log(transport_mode_gmaps)
         session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
         next();
       }
@@ -67,9 +70,15 @@ SearchTime.dialog('SearchTime', [
     // session.send(`Recherche du temps estimé pour aller de ${capitalize(params.origin)} à ${capitalize(params.destination)} (${transport_mode_verbose[params.transportMode]})`);
 
     let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
+    let contentType = 'image/png';
     if (response.success) {
-      let output = `Il vous faudra ${response.duration}`;
-      session.send(output);
+      let msg = new builder.Message(session).addAttachment({
+          contentUrl: util.format('data:%s;base64,%s', contentType, response.data.map),
+          contentType: contentType,
+          name: 'Map overview', 
+      }).text(`Il vous faudra ${response.data.duration.text}`);
+      session.send(msg);
+      session.send(`[Suivez ce lien pour lancer la navigation](${response.data.url})`)
     }
     session.endDialog();
   }

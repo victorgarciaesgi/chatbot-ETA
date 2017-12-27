@@ -1,9 +1,13 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2016",
     "module": "commonjs",
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "types": [
+      "node",
+      "googlemaps"
+    ]
   },
   "exclude": [
     "node_modules"

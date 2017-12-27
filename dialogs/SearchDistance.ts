@@ -11,7 +11,7 @@ SearchDistance.dialog('SearchDistance', [
     if (!args.loop) {
       let originEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Origin');
       let destinationEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Destination');
-      let transportModeEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'TransportModeV2');
+      let transportModeEntity = <any>builder.EntityRecognizer.findEntity(args.intent.entities, 'TransportModeV2');
       session.userData.searchParams = {
         origin: originEntity ? originEntity.entity : null,
         destination: destinationEntity ? destinationEntity.entity : null,
@@ -24,12 +24,12 @@ SearchDistance.dialog('SearchDistance', [
     else if (!session.userData.searchParams.destination) {
       builder.Prompts.text(session, ` Où voulez vous aller ? `);
     }
-    else if (session.userData.searchParams.transportMode == null) {
-      builder.Prompts.choice(session,
-        ` Quel moyen de transport souhaitez vous utiliser ? `,
-        transport_mode_verbose,
-        { listStyle: builder.ListStyle.button });
-    }
+    // else if (session.userData.searchParams.transportMode == null) {
+    //   builder.Prompts.choice(session,
+    //     ` Quel moyen de transport souhaitez vous utiliser ? `,
+    //     transport_mode_verbose,
+    //     { listStyle: builder.ListStyle.button });
+    // }
     else {
       next()
     }
@@ -52,14 +52,14 @@ SearchDistance.dialog('SearchDistance', [
       }
     }
 
-    if (session.userData.searchParams.transportMode == null) {
-      if (asked) {
-        session.replaceDialog('SearchDistance', { loop: true });
-      } else {
-        session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
-        next();
-      }
-    }
+    // if (session.userData.searchParams.transportMode == null) {
+    //   if (asked) {
+    //     session.replaceDialog('SearchDistance', { loop: true });
+    //   } else {
+    //     session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
+    //     next();
+    //   }
+    // }
     next();
   },
   async (session) => {
@@ -68,7 +68,7 @@ SearchDistance.dialog('SearchDistance', [
 
     let response = await Apis.getDistance(params.origin, params.destination, params.transportMode);
     if (response.success) {
-      let output = `Il vous faudra ${response.distance}`;
+      let output = `La distance entre ${capitalize(params.origin)} et ${capitalize(params.destination)} est de ${response.data.distance.text}`;
       session.send(output);
     }
     session.endDialog();

@@ -1,0 +1,436 @@
+{
+  "luis_schema_version": "2.1.0",
+  "versionId": "0.1",
+  "name": "chatbot-eta",
+  "desc": "Chatbot who gives ETA",
+  "culture": "fr-fr",
+  "intents": [
+    {
+      "name": "Fastest"
+    },
+    {
+      "name": "Help"
+    },
+    {
+      "name": "Itinairaire"
+    },
+    {
+      "name": "None"
+    },
+    {
+      "name": "SearchDistance"
+    },
+    {
+      "name": "SearchTime"
+    }
+  ],
+  "entities": [
+    {
+      "name": "Destination"
+    },
+    {
+      "name": "Origin"
+    }
+  ],
+  "composites": [],
+  "closedLists": [
+    {
+      "name": "TransportModeV2",
+      "subLists": [
+        {
+          "canonicalForm": "uber",
+          "list": [
+            "taxi",
+            "uber"
+          ]
+        },
+        {
+          "canonicalForm": "covoiturage",
+          "list": [
+            "blablacar",
+            "covoiturage"
+          ]
+        },
+        {
+          "canonicalForm": "walking",
+          "list": [
+            "a pied",
+            "à pied",
+            "marchant"
+          ]
+        },
+        {
+          "canonicalForm": "driving",
+          "list": [
+            "voiture",
+            "automobile",
+            "auto",
+            "caisse",
+            "gova"
+          ]
+        },
+        {
+          "canonicalForm": "bicycling",
+          "list": [
+            "vélo",
+            "velo"
+          ]
+        },
+        {
+          "canonicalForm": "transit",
+          "list": [
+            "métro",
+            "metro",
+            "rer",
+            "transport",
+            "transit",
+            "bus"
+          ]
+        }
+      ]
+    }
+  ],
+  "bing_entities": [],
+  "model_features": [
+    {
+      "name": "From",
+      "mode": true,
+      "words": "aller de,partir de,aller du,partir du,entre",
+      "activated": true
+    },
+    {
+      "name": "To",
+      "mode": true,
+      "words": "a,à,jusqu ' à,au,jusqu ' au",
+      "activated": true
+    }
+  ],
+  "regex_features": [],
+  "utterances": [
+    {
+      "text": "salut",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "hello",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "bonjour",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "hi",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "help me",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "calcule le temps qu'il faut pour aller de paris a marseille",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 50,
+          "endPos": 58
+        },
+        {
+          "entity": "Origin",
+          "startPos": 42,
+          "endPos": 46
+        }
+      ]
+    },
+    {
+      "text": "temps qu'il faut pour aller de paris a marseille",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 39,
+          "endPos": 47
+        },
+        {
+          "entity": "Origin",
+          "startPos": 31,
+          "endPos": 35
+        }
+      ]
+    },
+    {
+      "text": "donne moi le temps pour aller de origin a destination",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 42,
+          "endPos": 52
+        },
+        {
+          "entity": "Origin",
+          "startPos": 33,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "combien de temps pour aller de origin a destination ?",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 40,
+          "endPos": 50
+        },
+        {
+          "entity": "Origin",
+          "startPos": 31,
+          "endPos": 36
+        }
+      ]
+    },
+    {
+      "text": "temps de origin a destination",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 18,
+          "endPos": 28
+        },
+        {
+          "entity": "Origin",
+          "startPos": 9,
+          "endPos": 14
+        }
+      ]
+    },
+    {
+      "text": "temps pour aller de origin a destination",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 29,
+          "endPos": 39
+        },
+        {
+          "entity": "Origin",
+          "startPos": 20,
+          "endPos": 25
+        }
+      ]
+    },
+    {
+      "text": "temps pour aller de paris a marseille en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 28,
+          "endPos": 36
+        },
+        {
+          "entity": "Origin",
+          "startPos": 20,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "temps de paris a lyon en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 17,
+          "endPos": 20
+        },
+        {
+          "entity": "Origin",
+          "startPos": 9,
+          "endPos": 13
+        }
+      ]
+    },
+    {
+      "text": "combien de temps pour aller de paris a lyon en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 39,
+          "endPos": 42
+        },
+        {
+          "entity": "Origin",
+          "startPos": 31,
+          "endPos": 35
+        }
+      ]
+    },
+    {
+      "text": "donne moi le temps pour aller de paris a lyon en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 41,
+          "endPos": 44
+        },
+        {
+          "entity": "Origin",
+          "startPos": 33,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "donne moi le temps pour aller de origin au destination en transport",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 43,
+          "endPos": 53
+        },
+        {
+          "entity": "Origin",
+          "startPos": 33,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "combien de temps entre origin et destination en transport",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 33,
+          "endPos": 43
+        },
+        {
+          "entity": "Origin",
+          "startPos": 23,
+          "endPos": 28
+        }
+      ]
+    },
+    {
+      "text": "combien de temps pour aller a marseille",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 30,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "temps pour aller a marseille",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 19,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "calcule le temps qu'il faut pour aller a paris",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 41,
+          "endPos": 45
+        }
+      ]
+    },
+    {
+      "text": "distance entre paris et marseille en voiture",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 24,
+          "endPos": 32
+        },
+        {
+          "entity": "Origin",
+          "startPos": 15,
+          "endPos": 19
+        }
+      ]
+    },
+    {
+      "text": "combien de kilomètres entre paris et marseille en voiture",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 37,
+          "endPos": 45
+        },
+        {
+          "entity": "Origin",
+          "startPos": 28,
+          "endPos": 32
+        }
+      ]
+    },
+    {
+      "text": "itineraire entre paris et marseille en velo",
+      "intent": "Itinairaire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 26,
+          "endPos": 34
+        },
+        {
+          "entity": "Origin",
+          "startPos": 17,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "emmene moi a marseille en voiture",
+      "intent": "Itinairaire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 13,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "moyen le plus rapide pour aller de paris a marseille",
+      "intent": "Fastest",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 43,
+          "endPos": 51
+        },
+        {
+          "entity": "Origin",
+          "startPos": 35,
+          "endPos": 39
+        }
+      ]
+    }
+  ]
+}
