@@ -67,6 +67,7 @@ SearchTime.dialog('SearchTime', [
   },
   async (session) => {
     let params = session.userData.searchParams;
+    session.sendTyping();
     // session.send(`Recherche du temps estimé pour aller de ${capitalize(params.origin)} à ${capitalize(params.destination)} (${transport_mode_verbose[params.transportMode]})`);
 
     let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
@@ -75,7 +76,7 @@ SearchTime.dialog('SearchTime', [
       let msg = new builder.Message(session).addAttachment({
           contentUrl: util.format('data:%s;base64,%s', contentType, response.data.map),
           contentType: contentType,
-          name: 'Map overview', 
+          name: 'Apercçu du trajet', 
       }).text(`Il vous faudra ${response.data.duration.text}`);
       session.send(msg);
       session.send(`[Suivez ce lien pour lancer la navigation](${response.data.url})`)

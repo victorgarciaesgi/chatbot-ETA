@@ -77,7 +77,7 @@ async function directions(origin: string, destination: string, mode: string, avo
   console.log(response.json);
   let path = response.json.routes[0].overview_polyline.points;
   let map = await getStaticMap(path);
-  let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&direction=${destination}&travelMode=${mode}`)
+  let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelMode=${mode}`)
 
 
   if (response.status === "OK" || 200){
