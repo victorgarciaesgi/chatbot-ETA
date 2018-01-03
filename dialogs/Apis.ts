@@ -67,7 +67,7 @@ async function distanceMatrix(origin: string, destination: string, mode: string,
 
 async function directions(origin: string, destination: string, mode: string, avoid?: string, departure_time?: string): Promise<ApiResponse> {
   let response = await googleMaps.directions({
-    origin: origin, 
+    origin: origin,
     destination: destination, 
     mode: mode,
     avoid: avoid? avoid: undefined,

@@ -79,9 +79,10 @@ SearchTime.dialog('SearchTime', [
           name: 'Apercçu du trajet', 
       }).text(`Il vous faudra ${response.data.duration.text}`);
       session.send(msg);
-      session.send(`[Suivez ce lien pour lancer la navigation](${response.data.url})`)
+      session.send(`[Suivez ce lien pour lancer la navigation](${response.data.url})`);
+      session.endDialog();
     }
-    session.endDialog();
+    
   }
 
 ]).triggerAction({

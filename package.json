@@ -2,7 +2,7 @@
   "name": "chatbot_eta",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "./dist/app.js",
   "scripts": {
     "start": "concurrently --kill-others \" tsc -w \" \"nodemon\" "
   },
