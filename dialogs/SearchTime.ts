@@ -67,7 +67,7 @@ SearchTime.dialog('SearchTime', [
   },
   async (session) => {
     let params = session.userData.searchParams;
-    session.sendTyping();
+    // session.sendTyping();
     // session.send(`Recherche du temps estimé pour aller de ${capitalize(params.origin)} à ${capitalize(params.destination)} (${transport_mode_verbose[params.transportMode]})`);
 
     let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
