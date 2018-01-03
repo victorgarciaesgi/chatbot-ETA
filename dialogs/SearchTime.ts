@@ -72,14 +72,13 @@ SearchTime.dialog('SearchTime', [
 
     let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
     let contentType = 'image/png';
-    console.log('Api response :', response);
     if (response.success) {
-      // let msg = new builder.Message(session).addAttachment({
-      //     contentUrl: `data:${contentType};base64,${response.data.map}`,
-      //     contentType: contentType,
-      //     name: 'Apercu du trajet', 
-      // }).text(`Il vous faudra ${response.data.duration.text}`);
-      // session.send(msg);
+      let msg =  await new builder.Message(session).addAttachment({
+          contentUrl: `data:${contentType};base64,${response.data.map}`,
+          contentType: contentType,
+          name: 'Apercu du trajet', 
+      }).text(`Il vous faudra ${response.data.duration.text}`);
+      session.send(msg);
       session.send(`[Suivez ce lien pour lancer la navigation](${response.data.url})`);
       session.endDialog();
     }
