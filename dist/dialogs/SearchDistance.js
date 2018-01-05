@@ -59,7 +59,7 @@ exports.SearchDistance.dialog('SearchDistance', [
         if (response.success) {
             let card = yield functions_1.createCard(session, response);
             card.text(`Le trajet fait ${response.data.distance}`);
-            let msg = new builder.Message(session).addAttachment(card);
+            let msg = yield new builder.Message(session).addAttachment(card);
             session.send(msg);
             session.endDialog();
         }

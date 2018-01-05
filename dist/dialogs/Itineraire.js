@@ -75,7 +75,7 @@ exports.Itineraire.dialog('Itineraire', [
             if (response.success) {
                 let card = yield functions_1.createCard(session, response);
                 card.text(`Voici l'itineraire. Le trajet fait ${response.data.distance.text} et durera ${response.data.duration.text}`);
-                let msg = new builder.Message(session).addAttachment(card);
+                let msg = yield new builder.Message(session).addAttachment(card);
                 session.send(msg);
                 session.endDialog();
             }

@@ -15,7 +15,7 @@ Blabla.dialog('Home', [
     let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
     session.userData.trips = data.trips;
     let carroussel = await createCarrousel(session, data.trips);
-    let reply = new builder.Message(session)
+    let reply = await new builder.Message(session)
         .text(`J'ai trouvé ces trajets pour vous`)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments(carroussel);
@@ -29,7 +29,7 @@ Blabla.dialog('buy', [
   async (session, args, next) => {
     console.log(args);
     let receipt = await createReceiptCard(session, session.userData.trips[Number(args.data)]);
-    let msg = new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
+    let msg = await new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
     session.send(msg);
     builder.Prompts.choice(session, 'Confirmer la réservation?', 'Oui|Non', {listStyle: builder.ListStyle.button})
   },

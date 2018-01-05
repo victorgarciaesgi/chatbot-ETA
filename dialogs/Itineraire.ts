@@ -70,7 +70,7 @@ Itineraire.dialog('Itineraire', [
       if (response.success) {
         let card = await createCard(session, response);
         card.text(`Voici l'itineraire. Le trajet fait ${response.data.distance.text} et durera ${response.data.duration.text}`)
-        let msg = new builder.Message(session).addAttachment(card);
+        let msg = await new builder.Message(session).addAttachment(card);
         session.send(msg);
         session.endDialog();
       }

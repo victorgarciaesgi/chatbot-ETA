@@ -75,7 +75,7 @@ exports.SearchTime.dialog('SearchTime', [
             if (response.success) {
                 let card = yield functions_1.createCard(session, response);
                 card.text(`Il vous faudra ${response.data.duration.text}`);
-                let msg = new builder.Message(session).addAttachment(card);
+                let msg = yield new builder.Message(session).addAttachment(card);
                 session.send(msg);
                 session.endDialog();
             }

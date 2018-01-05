@@ -20,7 +20,7 @@ exports.Blabla.dialog('Home', [
         let { data } = yield Apis_1.BlaBlaApi.getTrips(params.origin, params.destination);
         session.userData.trips = data.trips;
         let carroussel = yield functions_1.createCarrousel(session, data.trips);
-        let reply = new builder.Message(session)
+        let reply = yield new builder.Message(session)
             .text(`J'ai trouvé ces trajets pour vous`)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments(carroussel);
@@ -32,7 +32,7 @@ exports.Blabla.dialog('buy', [
     (session, args, next) => __awaiter(this, void 0, void 0, function* () {
         console.log(args);
         let receipt = yield functions_1.createReceiptCard(session, session.userData.trips[Number(args.data)]);
-        let msg = new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
+        let msg = yield new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
         session.send(msg);
         builder.Prompts.choice(session, 'Confirmer la réservation?', 'Oui|Non', { listStyle: builder.ListStyle.button });
     }),
