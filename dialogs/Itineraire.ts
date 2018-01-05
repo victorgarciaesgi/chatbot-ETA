@@ -1,9 +1,7 @@
 import * as builder from 'botbuilder';
-import { Apis, transport_mode_gmaps } from './Apis';
+import { Apis, transport_mode_gmaps, transport_mode_verbose } from './Apis';
 import { capitalize } from 'lodash';
-import * as util from 'util';
-
-const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun"];
+import {createCard} from './functions';
 
 export const Itineraire = new builder.Library('Itineraire');
 
@@ -64,18 +62,18 @@ Itineraire.dialog('Itineraire', [
   async (session) => {
     let params = session.userData.searchParams;
     session.sendTyping();
-    let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
-    let contentType = 'image/png';
-    if (response.success) {
-      let msg =  await new builder.Message(session).addAttachment({
-          contentUrl: `data:${contentType};base64,${response.data.map}`,
-          contentType: contentType,
-          name: 'Apercu du trajet', 
-      }).text(`Voila! J'ai calculé votre itineraire! 
-
-Vous pouvez lancer la navigation Google Maps avec ce lien: [Lancer la navigation](${response.data.url})`);
-      session.send(msg);
-      session.endDialog();
+    if (params.transportMode === "covoiturage") {
+      session.beginDialog('Blabla:Home', {params: params})
+    } 
+    else {
+      let response = await Apis.getDirections(params.origin, params.destination, params.transportMode);
+      if (response.success) {
+        let card = createCard(session, response);
+        card.text(`Voici l'itineraire. Le trajet fait ${response.data.distance} et durera ${response.data.duration}`)
+        let msg = new builder.Message(session).addAttachment(card);
+        session.send(msg);
+        session.endDialog();
+      }
     }
   }
 

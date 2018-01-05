@@ -32,11 +32,14 @@ bot.recognizer(recognizer);
 import { SearchTime } from './dialogs/SearchTime';
 import { SearchDistance } from './dialogs/SearchDistance';
 import { Itineraire } from './dialogs/Itineraire';
-
+import { Blabla } from './dialogs/BlablaCar';
 
 bot.library(SearchTime);
 bot.library(SearchDistance);
 bot.library(Itineraire);
+bot.library(Blabla);
+
+bot.beginDialogAction('buyTrip', 'Blabla:buy');
 
 bot.dialog('Hello', function (session) {
   session.endDialog(`### Bonjour!  
@@ -64,9 +67,7 @@ bot.dialog('Help', function (session) {
   matches: 'Help'
 });
 
-const BLABLACAR_URL = `https://public-api.blablacar.com/api/v2/trips?key=${process.env.BLABLACAR_KEY}`
 
-let response = axios.get('')
 
 // import * as googleMapsApi from '@google/maps';
 

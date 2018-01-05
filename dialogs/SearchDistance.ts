@@ -1,9 +1,8 @@
 import * as builder from 'botbuilder';
-import { Apis, transport_mode_gmaps } from './Apis';
+import { Apis, transport_mode_gmaps, transport_mode_verbose } from './Apis';
 import { capitalize } from 'lodash';
-import * as util from 'util';
+import { createCard } from './functions';
 
-const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun"];
 
 export const SearchDistance = new builder.Library('SearchDistance');
 
@@ -51,17 +50,10 @@ SearchDistance.dialog('SearchDistance', [
     let params = session.userData.searchParams;
     session.sendTyping();
     let response = await Apis.getDistance(params.origin, params.destination, params.transportMode);
-    let contentType = 'image/png';
     if (response.success) {
-      let msg =  await new builder.Message(session).addAttachment({
-          contentUrl: `data:${contentType};base64,${response.data.map}`,
-          contentType: contentType,
-          name: 'Apercu du trajet', 
-      }).text(`Voila! J'ai calculé la distance
-
-Il y a ${response.data.distance.text} entre ${capitalize(params.origin)} et ${capitalize(params.destination)}.
-
-Vous pouvez lancer la navigation Google Maps avec ce lien: [Lancer la navigation](${response.data.url})`);
+      let card = createCard(session, response);
+      card.text(`Le trajet fait ${response.data.distance}`)
+      let msg = new builder.Message(session).addAttachment(card);
       session.send(msg);
       session.endDialog();
     }
