@@ -56,5 +56,7 @@ export function createReceiptCard(session: builder.Session, element: BlablaTrips
 export function formatDate(date) {
 	let options: Intl.DateTimeFormatOptions = {weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "numeric"}
 	let result = new Date(date);
-	return result.toLocaleDateString('fr-FR', options)
+	console.log(result)
+	return result.toLocaleDateString('fr-FR', options);
+
 }

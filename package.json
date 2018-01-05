@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "concurrently --kill-others \" tsc -w \" \"nodemon ./dist/app.js\" "
+    "dev": "concurrently --kill-others \" tsc -w \" \"nodemon ./dist/app.js\" ",
+    "start": "nodemon ./dist/app.js"
   },
   "author": "Victor",
   "license": "MIT",
