@@ -1,6 +1,7 @@
 // Config
 import * as RESTIFY from "restify";
 import * as builder from "botbuilder";
+import axios from 'axios';
 require('dotenv-extended').load();
 const server = RESTIFY.createServer();
 const PORT = process.env.PORT || 3887;
@@ -30,16 +31,42 @@ bot.recognizer(recognizer);
 
 import { SearchTime } from './dialogs/SearchTime';
 import { SearchDistance } from './dialogs/SearchDistance';
+import { Itineraire } from './dialogs/Itineraire';
 
 
 bot.library(SearchTime);
 bot.library(SearchDistance);
+bot.library(Itineraire);
+
+bot.dialog('Hello', function (session) {
+  session.endDialog(`### Bonjour!  
+  Bienvenue sur le chatbot ETA. Je peux vous estimer le temps de trajet et la distance d’un point vers un autre ainsi que vous calculer l’itinéraire.  
+  
+
+  Essayez de me poser des questions comme :  
+
+
+  * Itinéraire de Paris à Lyon en vélo
+  * Temps de trajet entre Marseille et Bordeaux
+  * Emmène moi à Quimper`);
+}).triggerAction({
+  matches: 'Hello'
+});
 
 bot.dialog('Help', function (session) {
-  session.endDialog(`Boujour! Essayez de me poser une question commme: Temps pour aller de Paris a Marseille en vélo `);
+  session.endDialog(`Essayez de me poser des questions comme :  
+
+
+  * Itinéraire de Paris à Lyon en vélo
+  * Temps de trajet entre Marseille et Bordeaux
+  * Emmène moi à Quimper`);
 }).triggerAction({
   matches: 'Help'
 });
+
+const BLABLACAR_URL = `https://public-api.blablacar.com/api/v2/trips?key=${process.env.BLABLACAR_KEY}`
+
+let response = axios.get('')
 
 // import * as googleMapsApi from '@google/maps';
 

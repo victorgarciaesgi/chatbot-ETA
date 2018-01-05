@@ -5,9 +5,9 @@ import * as util from 'util';
 
 const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun"];
 
-export const SearchDistance = new builder.Library('SearchDistance');
+export const Itineraire = new builder.Library('Itineraire');
 
-SearchDistance.dialog('SearchDistance', [
+Itineraire.dialog('Itineraire', [
   (session, args, next) => {
     if (!args.loop) {
       let originEntity = builder.EntityRecognizer.findEntity(args.intent.entities, 'Origin');
@@ -25,6 +25,12 @@ SearchDistance.dialog('SearchDistance', [
     else if (!session.userData.searchParams.destination) {
       builder.Prompts.text(session, ` Où voulez vous aller ? `);
     }
+    else if (session.userData.searchParams.transportMode == null) {
+      builder.Prompts.choice(session,
+        ` Quel moyen de transport souhaitez vous utiliser ? `,
+        transport_mode_verbose,
+        { listStyle: builder.ListStyle.button });
+    }
     else {
       next()
     }
@@ -38,28 +44,34 @@ SearchDistance.dialog('SearchDistance', [
 
     if (!session.userData.searchParams.destination) {
       if (asked) {
-        session.replaceDialog('SearchDistance', { loop: true });
+        session.replaceDialog('Itineraire', { loop: true });
       } else {
         session.userData.searchParams.destination = results.response;
         asked = true;
       }
     }
 
+    if (session.userData.searchParams.transportMode == null) {
+      if (asked) {
+        session.replaceDialog('Itineraire', { loop: true });
+      } else {
+        session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
+        next();
+      }
+    }
     next();
   },
   async (session) => {
     let params = session.userData.searchParams;
     session.sendTyping();
-    let response = await Apis.getDistance(params.origin, params.destination, params.transportMode);
+    let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
     let contentType = 'image/png';
     if (response.success) {
       let msg =  await new builder.Message(session).addAttachment({
           contentUrl: `data:${contentType};base64,${response.data.map}`,
           contentType: contentType,
           name: 'Apercu du trajet', 
-      }).text(`Voila! J'ai calculé la distance
-
-Il y a ${response.data.distance.text} entre ${capitalize(params.origin)} et ${capitalize(params.destination)}.
+      }).text(`Voila! J'ai calculé votre itineraire! 
 
 Vous pouvez lancer la navigation Google Maps avec ce lien: [Lancer la navigation](${response.data.url})`);
       session.send(msg);
@@ -68,7 +80,7 @@ Vous pouvez lancer la navigation Google Maps avec ce lien: [Lancer la navigation
   }
 
 ]).triggerAction({
-  matches: "SearchDistance"
+  matches: "Itineraire"
 });
 
 

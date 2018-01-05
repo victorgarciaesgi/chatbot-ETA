@@ -9,36 +9,32 @@ const googleMaps = googleMapsApi.createClient({
   Promise: Promise
 });
 
+const CITYMAPPER_KEY = process.env.CITYMAPPER_KEY;
 const MAPS_STATIC_URL = `https://maps.googleapis.com/maps/api/staticmap?size=600x400&key=${process.env.GOOGLE_API_KEY}`
 const MAPS_LINK_URL = `https://www.google.com/maps/dir/?api=1`
 
 
 export namespace Apis {
   export async function getDuration(origin: string, destination: string, mode: string, avoid?: string, departure_time?: string): Promise<ApiResponse> {
-    console.log(mode);
     let response = await distanceMatrix(origin, destination, mode, avoid, departure_time);
-    console.log('distance ok')
     if (response.success) {
       let data = await directions(origin, destination, mode);
-      console.log('direction ok')
-
       return {success: true, data: {duration: response.data.duration, url: data.data.url, map: data.data.map}}
     }
   }
 
   export async function getDistance(origin: string, destination: string, mode: string, avoid?: string): Promise<ApiResponse> {
     let response = await distanceMatrix(origin, destination, mode, avoid);
-
     if (response.success) {
-      return {success: true, data: {distance: response.data.distance}}
+      let data = await directions(origin, destination, mode);
+      return {success: true, data: {distance: response.data.distance, url: data.data.url, map: data.data.map}}
     }
   }
 
   export async function getDirections(origin: string, destination: string, mode: string, avoid?: string): Promise<ApiResponse> {
-    let response = await distanceMatrix(origin, destination, mode, avoid);
-
-    if (response.success) {
-      return {success: true, data: {distance: response.data.distance}}
+    let data = await directions(origin, destination, mode, avoid);
+    if (data.success) {
+      return {success: true, data: {url: data.data.url, map: data.data.map}}
     }
   }
 }
@@ -77,7 +73,7 @@ async function directions(origin: string, destination: string, mode: string, avo
   console.log(response.json);
   let path = response.json.routes[0].overview_polyline.points;
   let map = await getStaticMap(path);
-  let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelMode=${mode}`)
+  let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelmode=${mode}`)
 
 
   if (response.status === "OK" || 200){

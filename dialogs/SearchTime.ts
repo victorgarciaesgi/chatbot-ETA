@@ -36,9 +36,7 @@ SearchTime.dialog('SearchTime', [
     }
   },
   (session, results, next) => {
-    console.log("@@" + JSON.stringify(results));
     let asked = false;
-    console.log(JSON.stringify(session.userData.searchParams))
     if (!session.userData.searchParams.origin) {
       session.userData.searchParams.origin = results.response;
       asked = true;
@@ -57,8 +55,6 @@ SearchTime.dialog('SearchTime', [
       if (asked) {
         session.replaceDialog('SearchTime', { loop: true });
       } else {
-        console.log(JSON.stringify(results.response.index))
-        console.log(transport_mode_gmaps)
         session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
         next();
       }
@@ -68,8 +64,6 @@ SearchTime.dialog('SearchTime', [
   async (session) => {
     let params = session.userData.searchParams;
     session.sendTyping();
-    // session.send(`Recherche du temps estimé pour aller de ${capitalize(params.origin)} à ${capitalize(params.destination)} (${transport_mode_verbose[params.transportMode]})`);
-
     let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
     let contentType = 'image/png';
     if (response.success) {
@@ -77,9 +71,12 @@ SearchTime.dialog('SearchTime', [
           contentUrl: `data:${contentType};base64,${response.data.map}`,
           contentType: contentType,
           name: 'Apercu du trajet', 
-      }).text(`Il vous faudra ${response.data.duration.text}`);
+      }).text(`Voila! J'ai calculé le temps estimé.
+
+Il vous faudra ${response.data.duration.text}.
+
+Vous pouvez lancer la navigation Google Maps avec ce lien: [Lancer la navigation](${response.data.url})`);
       session.send(msg);
-      session.send(`[Suivez ce lien pour lancer la navigation](${response.data.url})`);
       session.endDialog();
     }
   }
