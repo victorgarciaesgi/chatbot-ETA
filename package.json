@@ -23,6 +23,9 @@
     "typescript": "^2.6.2",
     "util": "^0.10.3"
   },
+  "engines": {
+    "node": "9.2.0"
+  },
   "nodemonConfig": {
     "delay": "1000"
   }

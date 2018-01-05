@@ -51,7 +51,7 @@ function createCarrousel(session, trips) {
 exports.createCarrousel = createCarrousel;
 function createReceiptCard(session, element) {
     return __awaiter(this, void 0, void 0, function* () {
-        return new builder.ReceiptCard(session)
+        return yield new builder.ReceiptCard(session)
             .title('Trajet BlaBlaCar')
             .facts([
             builder.Fact.create(session, `${element.departure_place.city_name} - ${element.arrival_place.city_name}`, 'Voyage'),
