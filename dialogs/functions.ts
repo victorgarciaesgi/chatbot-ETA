@@ -40,7 +40,7 @@ export async function createCarrousel(session, trips: BlablaTrips[]): Promise<bu
 
 export function createReceiptCard(session: builder.Session, element: BlablaTrips): builder.ReceiptCard{
 	return new builder.ReceiptCard(session)
-		.title('John Doe')
+		.title('Trajet BlaBlaCar')
 		.facts([
 			builder.Fact.create(session, `${element.departure_place.city_name} - ${element.arrival_place.city_name}`, 'Voyage'),
 			builder.Fact.create(session, 'VISA 5555-****', 'Moyent de paiement')

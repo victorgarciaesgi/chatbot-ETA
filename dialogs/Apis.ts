@@ -44,7 +44,7 @@ export namespace Apis {
 
 export namespace BlaBlaApi {
   export async function getTrips(origin: string, destination: string): Promise<BlablaResponse> {
-    let response = await axios.get(`${BLABLACAR_URL}&fn=paris&tn=nantes`);
+    let response = await axios.get(`${BLABLACAR_URL}&fn=${origin}&tn=${destination}`);
     let trips: BlablaTrips[] = response.data.trips;
     return {success: true, data: {trips: trips}};
   }

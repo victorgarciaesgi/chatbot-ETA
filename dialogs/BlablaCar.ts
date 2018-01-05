@@ -6,25 +6,21 @@ import { createCard, createCarrousel, createReceiptCard} from './functions';
 
 
 export const Blabla = new builder.Library('Blabla');
-var keep_trips = [];
 
 Blabla.dialog('Home', [
   async (session, args, next) => {
-    session.sendTyping();
-    console.log(args)
+    session.userData.trips = [];
     let params = args.params;
-    console.log('home')
-    let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
-    console.log('trips ok')
     session.sendTyping();
+    let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
     session.userData.trips = data.trips;
     let carroussel = await createCarrousel(session, data.trips);
-    session.sendTyping();
-    console.log('carrousel ok')
     let reply = new builder.Message(session)
+        .text(`J'ai trouvé ces trajets pour vous`)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments(carroussel);
     session.send(reply);
+    session.endDialog();
   },
 
 ]);
@@ -32,7 +28,9 @@ Blabla.dialog('Home', [
 Blabla.dialog('buy', [
   (session, args, next) => {
     console.log(args);
-    createReceiptCard(session, keep_trips[args.data]);
+    let receipt = createReceiptCard(session, session.userData.trips[Number(args.data)]);
+    let msg = new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
+    session.send(msg);
     builder.Prompts.choice(session, 'Confirmer la réservation?', 'Oui|Non', {listStyle: builder.ListStyle.button})
   },
   (session, results, next) => {
