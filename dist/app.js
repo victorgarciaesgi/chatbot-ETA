@@ -56,8 +56,6 @@ bot.dialog('Help', function (session) {
 }).triggerAction({
     matches: 'Help'
 });
-const functions_1 = require("./dialogs/functions");
-console.log(functions_1.formatDate("5/01/2018 09:30:00"));
 // import * as googleMapsApi from '@google/maps';
 // const googleMaps = googleMapsApi.createClient({
 //   key: process.env.GOOGLE_API_KEY,

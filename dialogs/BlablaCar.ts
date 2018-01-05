@@ -26,9 +26,9 @@ Blabla.dialog('Home', [
 ]);
 
 Blabla.dialog('buy', [
-  (session, args, next) => {
+  async (session, args, next) => {
     console.log(args);
-    let receipt = createReceiptCard(session, session.userData.trips[Number(args.data)]);
+    let receipt = await createReceiptCard(session, session.userData.trips[Number(args.data)]);
     let msg = new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
     session.send(msg);
     builder.Prompts.choice(session, 'Confirmer la réservation?', 'Oui|Non', {listStyle: builder.ListStyle.button})

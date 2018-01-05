@@ -4,9 +4,9 @@ import { capitalize } from 'lodash';
 
 
 
-export function createCard(session: builder.Session, response): builder.HeroCard {
+export async function createCard(session: builder.Session, response): Promise<builder.HeroCard> {
 	let params = session.userData.searchParams;
-	return new builder.HeroCard(session)
+	return await new builder.HeroCard(session)
 		.title(`${capitalize(params.origin)} - ${capitalize(params.destination)}`)
 		.subtitle(transport_mode_verbose[transport_mode_gmaps.indexOf(params.transportMode)])
 		.images([
@@ -21,7 +21,7 @@ export async function createCarrousel(session, trips: BlablaTrips[]): Promise<bu
 	var carrousel = [];
 	for (let [index, element] of trips.entries()) {
 		let image = await Apis.getDirections(element.departure_place.city_name, element.arrival_place.city_name, 'driving');
-		let trip = new builder.HeroCard(session)
+		let trip = await new builder.HeroCard(session)
 			.title(`${element.departure_place.city_name} - ${element.arrival_place.city_name} : ${element.price.string_value}`)
 			.subtitle(`Départ le ${formatDate(element.departure_date)}`)
 			.text(`Places restantes: ${element.seats_left}`)
@@ -38,7 +38,7 @@ export async function createCarrousel(session, trips: BlablaTrips[]): Promise<bu
 }
 
 
-export function createReceiptCard(session: builder.Session, element: BlablaTrips): builder.ReceiptCard{
+export async function createReceiptCard(session: builder.Session, element: BlablaTrips): Promise<builder.ReceiptCard>{
 	return new builder.ReceiptCard(session)
 		.title('Trajet BlaBlaCar')
 		.facts([

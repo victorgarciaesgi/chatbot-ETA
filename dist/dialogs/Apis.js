@@ -18,7 +18,7 @@ const googleMaps = googleMapsApi.createClient({
     Promise: Promise
 });
 const CITYMAPPER_KEY = process.env.CITYMAPPER_KEY;
-const MAPS_STATIC_URL = `https://maps.googleapis.com/maps/api/staticmap?size=600x400&key=${process.env.GOOGLE_API_KEY}`;
+const MAPS_STATIC_URL = `https://maps.googleapis.com/maps/api/staticmap?key=${process.env.GOOGLE_API_KEY}`;
 const MAPS_LINK_URL = `https://www.google.com/maps/dir/?api=1`;
 const BLABLACAR_URL = `https://public-api.blablacar.com/api/v2/trips?key=${process.env.BLABLACAR_KEY}&locale=fr_FR`;
 var Apis;
@@ -43,11 +43,11 @@ var Apis;
         });
     }
     Apis.getDistance = getDistance;
-    function getDirections(origin, destination, mode, avoid) {
+    function getDirections(origin, destination, mode, size, avoid) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield distanceMatrix(origin, destination, mode, avoid);
             if (response.success) {
-                let data = yield directions(origin, destination, mode);
+                let data = yield directions(origin, destination, mode, size);
                 return { success: true, data: { distance: response.data.distance, duration: response.data.duration, url: data.data.url, map: data.data.map } };
             }
         });
@@ -59,7 +59,7 @@ var BlaBlaApi;
     function getTrips(origin, destination) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield axios_1.default.get(`${BLABLACAR_URL}&fn=${origin}&tn=${destination}`);
-            let trips = response.data.trips;
+            let trips = response.data.trips.slice(0, 3);
             return { success: true, data: { trips: trips } };
         });
     }
@@ -84,7 +84,7 @@ function distanceMatrix(origin, destination, mode, avoid, departure_time) {
         }
     });
 }
-function directions(origin, destination, mode, avoid, departure_time) {
+function directions(origin, destination, mode, size, avoid, departure_time) {
     return __awaiter(this, void 0, void 0, function* () {
         let response = yield googleMaps.directions({
             origin: origin,
@@ -94,7 +94,7 @@ function directions(origin, destination, mode, avoid, departure_time) {
             departure_time: departure_time ? departure_time : undefined,
         }).asPromise();
         let path = response.json.routes[0].overview_polyline.points;
-        let map = yield getStaticMap(path);
+        let map = yield getStaticMap(path, size);
         let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelmode=${mode}`);
         if (response.status === "OK" || 200) {
             return { success: true, data: { map: map, url: url } };
@@ -104,9 +104,10 @@ function directions(origin, destination, mode, avoid, departure_time) {
         }
     });
 }
-function getStaticMap(path) {
+function getStaticMap(path, size) {
     return __awaiter(this, void 0, void 0, function* () {
-        let url = `${MAPS_STATIC_URL}&path=enc%3A${path}`;
+        size = size || "600x400";
+        let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
         let response = yield axios_1.default.get(url, { responseType: 'arraybuffer' });
         let image = new Buffer(response.data, 'binary').toString('base64');
         return image;

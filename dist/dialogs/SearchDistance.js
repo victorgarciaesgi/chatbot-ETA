@@ -57,7 +57,7 @@ exports.SearchDistance.dialog('SearchDistance', [
         session.sendTyping();
         let response = yield Apis_1.Apis.getDistance(params.origin, params.destination, params.transportMode);
         if (response.success) {
-            let card = functions_1.createCard(session, response);
+            let card = yield functions_1.createCard(session, response);
             card.text(`Le trajet fait ${response.data.distance}`);
             let msg = new builder.Message(session).addAttachment(card);
             session.send(msg);

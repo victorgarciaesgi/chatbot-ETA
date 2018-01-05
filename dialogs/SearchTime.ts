@@ -69,7 +69,7 @@ SearchTime.dialog('SearchTime', [
     else {
       let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
       if (response.success) {
-        let card = createCard(session, response);
+        let card = await createCard(session, response);
         card.text(`Il vous faudra ${response.data.duration.text}`)
         let msg = new builder.Message(session).addAttachment(card);
         session.send(msg);

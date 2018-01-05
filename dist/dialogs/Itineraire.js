@@ -73,7 +73,7 @@ exports.Itineraire.dialog('Itineraire', [
         else {
             let response = yield Apis_1.Apis.getDirections(params.origin, params.destination, params.transportMode);
             if (response.success) {
-                let card = functions_1.createCard(session, response);
+                let card = yield functions_1.createCard(session, response);
                 card.text(`Voici l'itineraire. Le trajet fait ${response.data.distance.text} et durera ${response.data.duration.text}`);
                 let msg = new builder.Message(session).addAttachment(card);
                 session.send(msg);

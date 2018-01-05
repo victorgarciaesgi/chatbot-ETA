@@ -11,7 +11,7 @@ const googleMaps = googleMapsApi.createClient({
 });
 
 const CITYMAPPER_KEY = process.env.CITYMAPPER_KEY;
-const MAPS_STATIC_URL = `https://maps.googleapis.com/maps/api/staticmap?size=600x400&key=${process.env.GOOGLE_API_KEY}`
+const MAPS_STATIC_URL = `https://maps.googleapis.com/maps/api/staticmap?key=${process.env.GOOGLE_API_KEY}`
 const MAPS_LINK_URL = `https://www.google.com/maps/dir/?api=1`;
 const BLABLACAR_URL = `https://public-api.blablacar.com/api/v2/trips?key=${process.env.BLABLACAR_KEY}&locale=fr_FR`
 
@@ -33,10 +33,10 @@ export namespace Apis {
     }
   }
 
-  export async function getDirections(origin: string, destination: string, mode: string, avoid?: string): Promise<ApiResponse> {
+  export async function getDirections(origin: string, destination: string, mode: string, size?: string, avoid?: string): Promise<ApiResponse> {
     let response = await distanceMatrix(origin, destination, mode, avoid);
     if (response.success) {
-      let data = await directions(origin, destination, mode);
+      let data = await directions(origin, destination, mode, size);
       return {success: true, data: {distance: response.data.distance, duration: response.data.duration, url: data.data.url, map: data.data.map}}
     }
   }
@@ -45,7 +45,7 @@ export namespace Apis {
 export namespace BlaBlaApi {
   export async function getTrips(origin: string, destination: string): Promise<BlablaResponse> {
     let response = await axios.get(`${BLABLACAR_URL}&fn=${origin}&tn=${destination}`);
-    let trips: BlablaTrips[] = response.data.trips;
+    let trips: BlablaTrips[] = response.data.trips.slice(0, 3);
     return {success: true, data: {trips: trips}};
   }
 }
@@ -71,7 +71,7 @@ async function distanceMatrix(origin: string, destination: string, mode: string,
   }
 }
 
-async function directions(origin: string, destination: string, mode: string, avoid?: string, departure_time?: string): Promise<ApiResponse> {
+async function directions(origin: string, destination: string, mode: string, size?, avoid?: string, departure_time?: string, ): Promise<ApiResponse> {
   let response = await googleMaps.directions({
     origin: origin,
     destination: destination, 
@@ -80,7 +80,7 @@ async function directions(origin: string, destination: string, mode: string, avo
     departure_time: departure_time? departure_time: undefined,
   }).asPromise();
   let path = response.json.routes[0].overview_polyline.points;
-  let map = await getStaticMap(path);
+  let map = await getStaticMap(path, size);
   let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelmode=${mode}`)
 
 
@@ -92,8 +92,9 @@ async function directions(origin: string, destination: string, mode: string, avo
   }
 }
 
-async function getStaticMap(path: string) : Promise<any> {
-  let url = `${MAPS_STATIC_URL}&path=enc%3A${path}`;
+async function getStaticMap(path: string, size?) : Promise<any> {
+  size = size || "600x400";
+  let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
   let response = await axios.get(url,{responseType: 'arraybuffer'});
   let image = new Buffer(response.data, 'binary').toString('base64');
   return image;

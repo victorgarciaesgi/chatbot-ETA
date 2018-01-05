@@ -73,7 +73,7 @@ exports.SearchTime.dialog('SearchTime', [
         else {
             let response = yield Apis_1.Apis.getDuration(params.origin, params.destination, params.transportMode);
             if (response.success) {
-                let card = functions_1.createCard(session, response);
+                let card = yield functions_1.createCard(session, response);
                 card.text(`Il vous faudra ${response.data.duration.text}`);
                 let msg = new builder.Message(session).addAttachment(card);
                 session.send(msg);

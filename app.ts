@@ -68,11 +68,6 @@ bot.dialog('Help', function (session) {
 });
 
 
-import { formatDate} from './dialogs/functions'
-
-
-console.log(formatDate("5/01/2018 09:30:00"))
-
 // import * as googleMapsApi from '@google/maps';
 
 // const googleMaps = googleMapsApi.createClient({
