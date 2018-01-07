@@ -15,7 +15,7 @@ Blabla.dialog('Home', [
     let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
     session.userData.trips = data.trips;
     let carroussel = await createCarrousel(session, data.trips);
-    let reply = await new builder.Message(session)
+    let reply = new builder.Message(session)
         .text(`J'ai trouvé ces trajets pour vous`)
         .attachmentLayout(builder.AttachmentLayout.carousel)
         .attachments(carroussel);

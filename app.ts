@@ -40,6 +40,7 @@ bot.library(Itineraire);
 bot.library(Blabla);
 
 bot.beginDialogAction('buyTrip', 'Blabla:buy');
+bot.use(builder.Middleware.sendTyping())
 
 bot.dialog('Hello', function (session) {
   session.endDialog(`### Bonjour!  

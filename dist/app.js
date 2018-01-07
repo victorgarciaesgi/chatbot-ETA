@@ -32,6 +32,7 @@ bot.library(SearchDistance_1.SearchDistance);
 bot.library(Itineraire_1.Itineraire);
 bot.library(BlablaCar_1.Blabla);
 bot.beginDialogAction('buyTrip', 'Blabla:buy');
+bot.use(builder.Middleware.sendTyping());
 bot.dialog('Hello', function (session) {
     session.endDialog(`### Bonjour!  
   Bienvenue sur le chatbot ETA. Je peux vous estimer le temps de trajet et la distance d’un point vers un autre ainsi que vous calculer l’itinéraire.  

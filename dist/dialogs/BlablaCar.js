@@ -20,7 +20,7 @@ exports.Blabla.dialog('Home', [
         let { data } = yield Apis_1.BlaBlaApi.getTrips(params.origin, params.destination);
         session.userData.trips = data.trips;
         let carroussel = yield functions_1.createCarrousel(session, data.trips);
-        let reply = yield new builder.Message(session)
+        let reply = new builder.Message(session)
             .text(`J'ai trouvé ces trajets pour vous`)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments(carroussel);
