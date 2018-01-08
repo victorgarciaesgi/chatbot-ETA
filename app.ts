@@ -43,16 +43,18 @@ bot.beginDialogAction('buyTrip', 'Blabla:buy');
 bot.use(builder.Middleware.sendTyping())
 
 bot.dialog('Hello', function (session) {
-  session.endDialog(`### Bonjour!  
-  Bienvenue sur le chatbot ETA. Je peux vous estimer le temps de trajet et la distance d’un point vers un autre ainsi que vous calculer l’itinéraire.  
-  
-
-  Essayez de me poser des questions comme :  
-
-
-  * Itinéraire de Paris à Lyon en vélo
-  * Temps de trajet entre Marseille et Bordeaux
-  * Emmène moi à Quimper`);
+  session.endDialog(`## Bonjour!  
+  Bienvenue sur le chatbot ETA. 
+ Je peux vous estimer le temps de trajet et la distance d’un point vers un autre ainsi que vous calculer l’itinéraire.  
+ Je peux également rechercher et réserver des trajets BlaBlaCar
+   
+ ---
+ 
+ ### Essayez de me poser des questions comme : 
+ 
+   * Itinéraire de Paris à Lyon en vélo
+   * Temps de trajet entre Marseille et Bordeaux
+   * Emmène moi à Quimper`);
 }).triggerAction({
   matches: 'Hello'
 });

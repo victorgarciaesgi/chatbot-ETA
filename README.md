@@ -26,11 +26,14 @@ Bot will start on [localhost:3887/api/messages](localhost:3887/api/messages)
 You need API Keys:
 
 * Google Maps Directions API
-* Google Maps Distance Matrix
-* Google Maps Static Map
+* Google Maps Distance Matrix API
+* Google Maps Static Map API
 * Google Maps Javascript API
 * Google Maps Geocode API
-* BlaBlaCar API key
+* BlaBlaCar API
+
+And also
+
 * LUIS url endpoint (JSON file in root)
 
 ## Modifier le bot
