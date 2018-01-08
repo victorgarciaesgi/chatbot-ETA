@@ -71,13 +71,18 @@ exports.SearchTime.dialog('SearchTime', [
             session.beginDialog('Blabla:Home', { params: params });
         }
         else {
-            let response = yield Apis_1.Apis.getDuration(params.origin, params.destination, params.transportMode);
-            if (response.success) {
-                let card = yield functions_1.createCard(session, response);
-                card.text(`Il vous faudra ${response.data.duration.text}`);
-                let msg = yield new builder.Message(session).addAttachment(card);
-                session.send(msg);
-                session.endDialog();
+            try {
+                let response = yield Apis_1.Apis.getDuration(params.origin, params.destination, params.transportMode);
+                if (response.success) {
+                    let card = yield functions_1.createCard(session, response);
+                    card.text(`Il vous faudra ${response.data.duration.text}`);
+                    let msg = yield new builder.Message(session).addAttachment(card);
+                    session.send(msg);
+                    session.endDialog();
+                }
+            }
+            catch (error) {
+                console.log(error);
             }
         }
     })

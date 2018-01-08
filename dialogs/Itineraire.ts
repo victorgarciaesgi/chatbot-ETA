@@ -66,6 +66,7 @@ Itineraire.dialog('Itineraire', [
       session.beginDialog('Blabla:Home', {params: params})
     } 
     else {
+     try {
       let response = await Apis.getDirections(params.origin, params.destination, params.transportMode);
       if (response.success) {
         let card = await createCard(session, response);
@@ -74,6 +75,9 @@ Itineraire.dialog('Itineraire', [
         session.send(msg);
         session.endDialog();
       }
+     } catch (error) {
+       console.log(error)
+     }
     }
   }
 
