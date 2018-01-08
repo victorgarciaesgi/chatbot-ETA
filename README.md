@@ -1,5 +1,10 @@
 # # Chatbot ETA
 
+Chatbot donnant des itinénaires et les estimations de temps de trajets.
+Affiche les trajets disponibles en blablaCar et le prix (API blablacar)
+
+Fait en Nodejs/Typescript
+
 ## Installing
 
 ```bash
@@ -28,4 +33,8 @@ You need API Keys:
 * BlaBlaCar API key
 * LUIS url endpoint (JSON file in root)
 
-Now dev!
+## Modifier le bot
+
+```bash
+npm run dev
+```

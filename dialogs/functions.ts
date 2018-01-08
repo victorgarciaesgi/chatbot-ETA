@@ -34,7 +34,6 @@ export async function createCarrousel(session, trips: BlablaTrips[]): Promise<bu
 			])
 		carrousel.push(trip);
 	};
-	console.log(carrousel)
 	return carrousel;
 }
 
@@ -49,8 +48,9 @@ export function createReceiptCard(session: builder.Session, element: BlablaTrips
 		])
 		.items([
 			builder.ReceiptItem.create(session, element.price_without_commission.string_value, 'Prix du trajet')
-			.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
+				.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
 			builder.ReceiptItem.create(session, element.commission.string_value, 'Commission')
+				.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
 		])
 		.total(element.price_with_commission.string_value);
 }

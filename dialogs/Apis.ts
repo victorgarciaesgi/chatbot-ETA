@@ -93,7 +93,7 @@ async function directions(origin: string, destination: string, mode: string, siz
 }
 
 async function getStaticMap(path: string, size?) : Promise<any> {
-  size = size || "500*350";
+  size = size || "500x350";
   let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
   return url;
 }
