@@ -17,7 +17,7 @@ function createCard(session, response) {
         .title(`${lodash_1.capitalize(params.origin)} - ${lodash_1.capitalize(params.destination)}`)
         .subtitle(Apis_1.transport_mode_verbose[Apis_1.transport_mode_gmaps.indexOf(params.transportMode)])
         .images([
-        builder.CardImage.create(session, `data:image/png;base64,${response.data.map}`)
+        builder.CardImage.create(session, response.data.map)
     ])
         .buttons([
         builder.CardAction.openUrl(session, response.data.url, 'Lancer la navigation')
@@ -34,7 +34,7 @@ function createCarrousel(session, trips) {
                 .subtitle(`Départ le ${element.departure_date}`)
                 .text(`Places restantes: ${element.seats_left}`)
                 .images([
-                builder.CardImage.create(session, `data:image/png;base64,${image.data.map}`)
+                builder.CardImage.create(session, image.data.map)
             ])
                 .buttons([
                 builder.CardAction.openUrl(session, element.links._front, 'Voir sur le site'),
