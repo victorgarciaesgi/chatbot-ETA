@@ -9,19 +9,6 @@ export const Blabla = new builder.Library('Blabla');
 
 Blabla.dialog('Home', [
   async (session, args, next) => {
-<<<<<<< HEAD
-    session.userData.trips = [];
-    let params = args.params;
-    let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
-    session.userData.trips = data.trips;
-    let carroussel = await createCarrousel(session, data.trips);
-    let reply = await new builder.Message(session)
-        .text(`J'ai trouvé ces trajets pour vous`)
-        .attachmentLayout(builder.AttachmentLayout.carousel)
-        .attachments(carroussel);
-    session.send(reply);
-    session.endDialog();
-=======
     try {
       session.userData.trips = [];
       let params = args.params;
@@ -37,7 +24,6 @@ Blabla.dialog('Home', [
     } catch (error) {
       console.log(error);
     }
->>>>>>> d64bf736e1daf8ca102e6f51794e6f7827a0eb44
   },
 
 ]);
@@ -49,6 +35,16 @@ Blabla.dialog('buy', [
     session.send(msg);
     builder.Prompts.choice(session, 'Confirmer la réservation?', 'Oui|Non', {listStyle: builder.ListStyle.button})
   },
+])
+
+
+Blabla.dialog('askName', [
+  (session) => {
+    builder.Prompts.text(session,'Veuillez présicer votre nom et prénom');
+  }
+])
+
+Blabla.dialog('reserver', [
   (session, results, next) => {
     if (results.response.index == 0) {
       session.send('Votre réservation est effectuée!')

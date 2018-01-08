@@ -34,12 +34,18 @@ exports.Blabla.dialog('Home', [
 ]);
 exports.Blabla.dialog('buy', [
     (session, args, next) => __awaiter(this, void 0, void 0, function* () {
-        console.log(args);
         let receipt = yield functions_1.createReceiptCard(session, session.userData.trips[Number(args.data)]);
         let msg = yield new builder.Message(session).addAttachment(receipt).text('Voici votre réservation');
         session.send(msg);
         builder.Prompts.choice(session, 'Confirmer la réservation?', 'Oui|Non', { listStyle: builder.ListStyle.button });
     }),
+]);
+exports.Blabla.dialog('askName', [
+    (session) => {
+        builder.Prompts.text(session, 'Veuillez présicer votre nom et prénom');
+    }
+]);
+exports.Blabla.dialog('reserver', [
     (session, results, next) => {
         if (results.response.index == 0) {
             session.send('Votre réservation est effectuée!');

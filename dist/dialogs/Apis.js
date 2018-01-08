@@ -106,7 +106,7 @@ function directions(origin, destination, mode, size, avoid, departure_time) {
 }
 function getStaticMap(path, size) {
     return __awaiter(this, void 0, void 0, function* () {
-        size = size || "600x400";
+        size = size || "500*350";
         let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
         return url;
     });
