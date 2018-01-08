@@ -10,7 +10,7 @@ export function createCard(session: builder.Session, response): builder.HeroCard
 		.title(`${capitalize(params.origin)} - ${capitalize(params.destination)}`)
 		.subtitle(transport_mode_verbose[transport_mode_gmaps.indexOf(params.transportMode)])
 		.images([
-			builder.CardImage.create(session, `data:image/png;base64,${response.data.map}`)
+			builder.CardImage.create(session, response.data.map)
 		])
 		.buttons([
 			builder.CardAction.openUrl(session, response.data.url, 'Lancer la navigation')
@@ -26,7 +26,7 @@ export async function createCarrousel(session, trips: BlablaTrips[]): Promise<bu
 			.subtitle(`Départ le ${element.departure_date}`)
 			.text(`Places restantes: ${element.seats_left}`)
 			.images([
-				builder.CardImage.create(session, `data:image/png;base64,${image.data.map}`)
+				builder.CardImage.create(session, image.data.map)
 			])
 			.buttons([
 				builder.CardAction.openUrl(session, element.links._front, 'Voir sur le site'),
