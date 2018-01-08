@@ -12,7 +12,6 @@ Blabla.dialog('Home', [
     try {
       session.userData.trips = [];
       let params = args.params;
-      session.sendTyping();
       let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
       session.userData.trips = data.trips;
       let carroussel = await createCarrousel(session, data.trips);

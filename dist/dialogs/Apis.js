@@ -107,10 +107,10 @@ function directions(origin, destination, mode, size, avoid, departure_time) {
 function getStaticMap(path, size) {
     return __awaiter(this, void 0, void 0, function* () {
         size = size || "600x400";
-        let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
-        let response = yield axios_1.default.get(url, { responseType: 'arraybuffer' });
-        let image = new Buffer(response.data, 'binary').toString('base64');
-        return image;
+        // let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
+        // let response = await axios.get(url,{responseType: 'arraybuffer'});
+        // let image = new Buffer(response.data, 'binary').toString('base64');
+        return '';
     });
 }
 //# sourceMappingURL=Apis.js.map

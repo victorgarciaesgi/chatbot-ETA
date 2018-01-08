@@ -17,7 +17,6 @@ exports.Blabla.dialog('Home', [
         try {
             session.userData.trips = [];
             let params = args.params;
-            session.sendTyping();
             let { data } = yield Apis_1.BlaBlaApi.getTrips(params.origin, params.destination);
             session.userData.trips = data.trips;
             let carroussel = yield functions_1.createCarrousel(session, data.trips);

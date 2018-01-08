@@ -94,10 +94,10 @@ async function directions(origin: string, destination: string, mode: string, siz
 
 async function getStaticMap(path: string, size?) : Promise<any> {
   size = size || "600x400";
-  let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
-  let response = await axios.get(url,{responseType: 'arraybuffer'});
-  let image = new Buffer(response.data, 'binary').toString('base64');
-  return image;
+  // let url = `${MAPS_STATIC_URL}&size=${size}&path=enc%3A${path}`;
+  // let response = await axios.get(url,{responseType: 'arraybuffer'});
+  // let image = new Buffer(response.data, 'binary').toString('base64');
+  return '';
 }
 
 
