@@ -9,18 +9,22 @@ export const Blabla = new builder.Library('Blabla');
 
 Blabla.dialog('Home', [
   async (session, args, next) => {
-    session.userData.trips = [];
-    let params = args.params;
-    session.sendTyping();
-    let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
-    session.userData.trips = data.trips;
-    let carroussel = await createCarrousel(session, data.trips);
-    let reply = new builder.Message(session)
-        .text(`J'ai trouvé ces trajets pour vous`)
-        .attachmentLayout(builder.AttachmentLayout.carousel)
-        .attachments(carroussel);
-    session.send(reply);
-    session.endDialog();
+    try {
+      session.userData.trips = [];
+      let params = args.params;
+      session.sendTyping();
+      let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
+      session.userData.trips = data.trips;
+      let carroussel = await createCarrousel(session, data.trips);
+      let reply = new builder.Message(session)
+          .text(`J'ai trouvé ces trajets pour vous`)
+          .attachmentLayout(builder.AttachmentLayout.carousel)
+          .attachments(carroussel);
+      session.send(reply);
+      session.endDialog();
+    } catch (error) {
+      console.log(error);
+    }
   },
 
 ]);
