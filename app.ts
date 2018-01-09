@@ -18,7 +18,14 @@ const connector = new builder.ChatConnector({
 server.post("/api/messages", connector.listen());
 
 const bot = new builder.UniversalBot(connector, [(session) => {
-    session.send(`Je n'ai pas compris ce que vous avez dit`);
+    session.send(`Je n'ai pas compris ce que vous avez dit
+    
+      ### Essayez de me poser des questions comme : 
+    
+      * Itinéraire de Paris à Lyon en vélo
+      * Temps de trajet entre Marseille et Bordeaux
+      * Emmène moi à Quimper en covoiturage
+    `);
     session.endDialog();
 }]);
 
@@ -44,17 +51,17 @@ bot.use(builder.Middleware.sendTyping())
 
 bot.dialog('Hello', function (session) {
   session.endDialog(`## Bonjour!  
-  Bienvenue sur le chatbot ETA. 
- Je peux vous estimer le temps de trajet et la distance d’un point vers un autre ainsi que vous calculer l’itinéraire.  
- Je peux également rechercher et réserver des trajets BlaBlaCar
-   
- ---
- 
- ### Essayez de me poser des questions comme : 
- 
-   * Itinéraire de Paris à Lyon en vélo
-   * Temps de trajet entre Marseille et Bordeaux
-   * Emmène moi à Quimper`);
+Bienvenue sur le chatbot ETA. 
+Je peux vous estimer le temps de trajet et la distance d’un point vers un autre ainsi que vous calculer l’itinéraire.  
+Je peux également rechercher et réserver des trajets BlaBlaCar
+  
+---
+
+### Essayez de me poser des questions comme:
+
+* Itinéraire de Paris à Lyon en vélo
+* Temps de trajet entre Marseille et Bordeaux
+* Emmène moi à Quimper en covoiturage`);
 }).triggerAction({
   matches: 'Hello'
 });

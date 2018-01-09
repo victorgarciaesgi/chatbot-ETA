@@ -47,16 +47,16 @@ export function createReceiptCard(session: builder.Session, element: BlablaTrips
 			builder.Fact.create(session, session.userData.fullName, 'Nom du passager')
 		])
 		.items([
-			builder.ReceiptItem.create(session, element.price_without_commission.string_value, 'Prix du trajet')
+			builder.ReceiptItem.create(session, element.price_without_commission.value, 'Prix du trajet')
 				.quantity('1')
 				.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
-			builder.ReceiptItem.create(session, element.commission.string_value, 'Commission')
+			builder.ReceiptItem.create(session, element.commission.value, 'Commission')
 				.quantity('1')
 				.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
 		])
-		.tax('0')
-		.vat('0')
-		.total(element.price_with_commission.string_value);
+		.tax(0)
+		.vat(0)
+		.total(element.price_with_commission.value);
 }
 
 
