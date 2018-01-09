@@ -54,7 +54,6 @@ Itineraire.dialog('Itineraire', [
         session.replaceDialog('Itineraire', { loop: true });
       } else {
         session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
-        next();
       }
     }
     next();
