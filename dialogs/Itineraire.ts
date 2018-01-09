@@ -1,7 +1,7 @@
 import * as builder from 'botbuilder';
 import { Apis, transport_mode_gmaps, transport_mode_verbose } from './Apis';
 import { capitalize } from 'lodash';
-import {createCard} from './functions';
+import {createCard} from './Cards';
 
 export const Itineraire = new builder.Library('Itineraire');
 

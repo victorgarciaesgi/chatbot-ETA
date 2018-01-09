@@ -44,7 +44,7 @@ export function createReceiptCard(session: builder.Session, element: BlablaTrips
 		.facts([
 			builder.Fact.create(session, `${element.departure_place.city_name} - ${element.arrival_place.city_name}`, 'Voyage'),
 			builder.Fact.create(session, 'VISA 5555-****', 'Moyent de paiement'),
-			builder.Fact.create(session, session.userData.fullName, 'Moyent de paiement')
+			builder.Fact.create(session, session.userData.fullName, 'Nom du passager')
 		])
 		.items([
 			builder.ReceiptItem.create(session, element.price_without_commission.string_value, 'Prix du trajet')

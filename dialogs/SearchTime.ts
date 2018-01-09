@@ -1,7 +1,7 @@
 import * as builder from 'botbuilder';
 import { Apis, transport_mode_gmaps, transport_mode_verbose } from './Apis';
 import { capitalize } from 'lodash';
-import { createCard } from './functions';
+import { createCard } from './Cards';
 
 
 export const SearchTime = new builder.Library('SearchTime');
@@ -55,7 +55,6 @@ SearchTime.dialog('SearchTime', [
         session.replaceDialog('SearchTime', { loop: true });
       } else {
         session.userData.searchParams.transportMode = transport_mode_gmaps[results.response.index];
-        next();
       }
     }
     next();

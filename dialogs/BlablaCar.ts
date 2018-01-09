@@ -1,7 +1,7 @@
 import * as builder from 'botbuilder';
 import { Apis, transport_mode_gmaps, transport_mode_verbose, BlaBlaApi } from './Apis';
 import { capitalize } from 'lodash';
-import { createCard, createCarrousel, createReceiptCard} from './functions';
+import { createCard, createCarrousel, createReceiptCard} from './Cards';
 
 
 
