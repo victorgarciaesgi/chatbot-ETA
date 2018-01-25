@@ -87,6 +87,11 @@ SearchTime.dialog('SearchTime', [
 
 ]).triggerAction({
   matches: "SearchTime"
-});
+}).endConversationAction(
+  "finConv", "Très bien. Posez moi une autre question!",
+    {
+      matches: /^cancel$|^exit$|^sortir$|^annuler$/i,
+    }
+);
 
 

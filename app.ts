@@ -28,8 +28,7 @@ const bot = new builder.UniversalBot(connector, [(session) => {
     
 ### Essayez de me poser des questions comme : 
 
-${possibilities}
-    `);
+${possibilities}`);
     session.endDialog();
 }]);
 
@@ -73,7 +72,7 @@ bot.dialog('Help', function (session) {
 ${possibilities}`);
 }).triggerAction({
   matches: 'Help'
-});
+})
 
 
 // import * as googleMapsApi from '@google/maps';

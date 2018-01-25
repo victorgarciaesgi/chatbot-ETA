@@ -87,6 +87,11 @@ Itineraire.dialog('Itineraire', [
 
 ]).triggerAction({
   matches: "Itineraire"
-});
+}).endConversationAction(
+  "finConv", "Très bien. Posez moi une autre question!",
+    {
+      matches: /^cancel$|^exit$|^sortir$|^annuler$/i,
+    }
+);
 
 

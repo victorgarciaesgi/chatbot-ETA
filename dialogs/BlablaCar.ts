@@ -54,9 +54,13 @@ Blabla.dialog('askName', [
   (session, results) => {
     session.userData.fullName = results.response;
     session.beginDialog('reserver', results)
-    
   }
-])
+]).endConversationAction(
+  "finConv", "Très bien. J'annule la commande",
+    {
+      matches: /^cancel$|^exit$|^sortir$|^annuler$/i,
+    }
+);
 
 Blabla.dialog('reserver', [
   async (session, args, next) => {
@@ -73,6 +77,12 @@ Blabla.dialog('reserver', [
     }
     session.endDialog();
   },
-])
+]).endConversationAction(
+  "finConv", "Très bien. J'annule la commande",
+    {
+      matches: /^cancel$|^exit$|^sortir$|^annuler$/i,
+      confirmPrompt: "Cela va annuler votre commande, êtes vous sur?"
+    }
+);
 
 
