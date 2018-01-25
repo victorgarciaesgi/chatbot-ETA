@@ -17,16 +17,18 @@ const connector = new builder.ChatConnector({
 
 server.post("/api/messages", connector.listen());
 
+const possibilities = `* Itinéraire de Paris à Lyon en vélo
+* Temps de trajet entre le 9 avenue Fosh 94340 et Bordeaux
+* Emmène moi à Quimper en covoiturage
+* Distance entre Paris et Toulouse
+* Je veux aller à Nantes`
+
 const bot = new builder.UniversalBot(connector, [(session) => {
     session.send(`Je n'ai pas compris ce que vous avez dit
     
 ### Essayez de me poser des questions comme : 
 
-* Itinéraire de Paris à Lyon en vélo
-* Temps de trajet entre le 9 avenue Fosh 94340 et Bordeaux
-* Emmène moi à Quimper en covoiturage
-* Distance entre Paris et Toulouse
-* Je veux aller à Nantes
+${possibilities}
     `);
     session.endDialog();
 }]);
@@ -61,20 +63,14 @@ Je peux également rechercher et réserver des trajets BlaBlaCar
 
 ### Essayez de me poser des questions comme:
 
-* Itinéraire de Paris à Lyon en vélo
-* Temps de trajet entre Marseille et Bordeaux
-* Emmène moi à Quimper en covoiturage`);
+${possibilities}`);
 }).triggerAction({
   matches: 'Hello'
 });
 
 bot.dialog('Help', function (session) {
   session.endDialog(`Essayez de me poser des questions comme :  
-
-
-  * Itinéraire de Paris à Lyon en vélo
-  * Temps de trajet entre Marseille et Bordeaux
-  * Emmène moi à Quimper`);
+${possibilities}`);
 }).triggerAction({
   matches: 'Help'
 });
