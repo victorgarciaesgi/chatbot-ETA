@@ -68,16 +68,20 @@ SearchTime.dialog('SearchTime', [
     else {
       try {
         let response = await Apis.getDuration(params.origin, params.destination, params.transportMode);
+        let msg;
         if (response.success) {
           let card = await createCard(session, response);
           card.text(`Il vous faudra ${response.data.duration.text}`)
-          let msg = await new builder.Message(session).addAttachment(card);
-          session.send(msg);
-          session.endDialog();
+          msg = await new builder.Message(session).addAttachment(card);
+        } else {
+          msg = response.message;
         }
+        session.send(msg);
       } catch (error) {
+        session.send('Erreur dans la requete')
         console.log(error);
       }
+      session.endDialog();
     }
   }
 

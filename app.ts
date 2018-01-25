@@ -20,11 +20,13 @@ server.post("/api/messages", connector.listen());
 const bot = new builder.UniversalBot(connector, [(session) => {
     session.send(`Je n'ai pas compris ce que vous avez dit
     
-      ### Essayez de me poser des questions comme : 
-    
-      * Itinéraire de Paris à Lyon en vélo
-      * Temps de trajet entre Marseille et Bordeaux
-      * Emmène moi à Quimper en covoiturage
+### Essayez de me poser des questions comme : 
+
+* Itinéraire de Paris à Lyon en vélo
+* Temps de trajet entre le 9 avenue Fosh 94340 et Bordeaux
+* Emmène moi à Quimper en covoiturage
+* Distance entre Paris et Toulouse
+* Je veux aller à Nantes
     `);
     session.endDialog();
 }]);

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "concurrently --kill-others \" tsc -w \" \"nodemon ./dist/app.js\" ",
+    "dev": "concurrently --kill-others \"nodemon ./dist/app.js\"  \" tsc -w \" ",
     "start": "tsc && nodemon ./dist/app.js"
   },
   "author": "Victor",
@@ -18,6 +18,7 @@
     "concurrently": "^3.5.1",
     "dotenv-extended": "^2.0.1",
     "lodash": "^4.17.4",
+    "moment": "^2.20.1",
     "nodemon": "^1.14.1",
     "restify": "6.3.4",
     "typescript": "^2.6.2",
@@ -25,8 +26,5 @@
   },
   "engines": {
     "node": "9.2.0"
-  },
-  "nodemonConfig": {
-    "delay": "1000"
   }
 }

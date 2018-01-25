@@ -1,7 +1,9 @@
 import * as builder from 'botbuilder';
 import { Apis, transport_mode_gmaps, transport_mode_verbose, BlablaTrips} from './Apis';
 import { capitalize } from 'lodash';
+import * as moment from 'moment';
 
+moment.locale('FR');
 
 
 export function createCard(session: builder.Session, response): builder.HeroCard {
@@ -47,16 +49,16 @@ export function createReceiptCard(session: builder.Session, element: BlablaTrips
 			builder.Fact.create(session, session.userData.fullName, 'Nom du passager')
 		])
 		.items([
-			builder.ReceiptItem.create(session, <any>element.price_without_commission.value, 'Prix du trajet')
+			builder.ReceiptItem.create(session, element.price_without_commission.string_value, 'Prix du trajet')
 				.quantity('1')
 				.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
-			builder.ReceiptItem.create(session, <any>element.commission.value, 'Commission')
+			builder.ReceiptItem.create(session, element.commission.string_value, 'Commission')
 				.quantity('1')
 				.image(builder.CardImage.create(session,'https://d1ovtcjitiy70m.cloudfront.net/vi-1/images/blablacar-ridesharing-logo.svg')),
 		])
-		.tax(<any>0)
-		.vat(<any>0)
-		.total(<any>element.price_with_commission.value);
+		.tax('0')
+		.vat('0')
+		.total(element.price_with_commission.string_value);
 }
 
 

@@ -13,13 +13,18 @@ Blabla.dialog('Home', [
       session.userData.trips = [];
       session.userData.selectedTrip = null;
       let params = args.params;
-      let { data } = await BlaBlaApi.getTrips(params.origin, params.destination);
-      session.userData.trips = data.trips;
-      let carroussel = await createCarrousel(session, data.trips);
-      let reply = new builder.Message(session)
-          .text(`J'ai trouvé ces trajets pour vous`)
-          .attachmentLayout(builder.AttachmentLayout.carousel)
-          .attachments(carroussel);
+      let response = await BlaBlaApi.getTrips(params.origin, params.destination);
+      let reply;
+      if (response.success) {
+        session.userData.trips = response.data.trips;
+        let carroussel = await createCarrousel(session, response.data.trips);
+        reply = new builder.Message(session)
+            .text(`J'ai trouvé ces trajets pour vous`)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments(carroussel);
+      } else {
+        reply = response.message;
+      }
       session.send(reply);
       session.endDialog();
     } catch (error) {

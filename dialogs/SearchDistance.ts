@@ -49,14 +49,22 @@ SearchDistance.dialog('SearchDistance', [
   async (session) => {
     let params = session.userData.searchParams;
     session.sendTyping();
+    if (params.transportMode == 'covoiturage') {
+      params.transportMode = "driving";
+    }
+    let msg;
     let response = await Apis.getDistance(params.origin, params.destination, params.transportMode);
     if (response.success) {
       let card = await createCard(session, response);
-      card.text(`Le trajet fait ${response.data.distance}`)
-      let msg = await new builder.Message(session).addAttachment(card);
-      session.send(msg);
-      session.endDialog();
+      console.log(response.data)
+      card.text(`Le trajet fait ${response.data.distance.text}`)
+      msg = await new builder.Message(session).addAttachment(card);
+      
+    } else {
+      msg = response.message;
     }
+    session.send(msg);
+    session.endDialog();
   }
 
 ]).triggerAction({

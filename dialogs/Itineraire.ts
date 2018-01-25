@@ -63,20 +63,25 @@ Itineraire.dialog('Itineraire', [
     session.sendTyping();
     if (params.transportMode === "covoiturage") {
       session.beginDialog('Blabla:Home', {params: params})
-    } 
+    } else if(params.transportMode === 'fastest') {
+      session.beginDialog("Fastest:Home", {params: params});
+    }
     else {
      try {
       let response = await Apis.getDirections(params.origin, params.destination, params.transportMode);
+      let msg;
       if (response.success) {
         let card = await createCard(session, response);
         card.text(`Voici l'itineraire. Le trajet fait ${response.data.distance.text} et durera ${response.data.duration.text}`)
-        let msg = await new builder.Message(session).addAttachment(card);
+        msg = await new builder.Message(session).addAttachment(card);
         session.send(msg);
-        session.endDialog();
+      } else {
+        msg = response.message;
       }
      } catch (error) {
        console.log(error)
      }
+     session.endDialog();
     }
   }
 

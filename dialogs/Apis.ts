@@ -4,6 +4,8 @@ import * as googleMapsApi from '@google/maps';
 export const transport_mode_gmaps = ['driving', 'bicycling', 'walking', 'transit', "covoiturage"];
 export const transport_mode_verbose = ['Voiture', 'Vélo', 'À pied', "Transports en commun", "BlaBlaCar"];
 
+console.log(process.env.GOOGLE_API_KEY)
+
 const googleMaps = googleMapsApi.createClient({
   key: process.env.GOOGLE_API_KEY,
   language: 'fr-FR',
@@ -22,6 +24,8 @@ export namespace Apis {
     if (response.success) {
       let data = await directions(origin, destination, mode);
       return {success: true, data: {duration: response.data.duration, url: data.data.url, map: data.data.map}}
+    } else {
+      return {success: false, message: response.message}
     }
   }
 
@@ -30,6 +34,8 @@ export namespace Apis {
     if (response.success) {
       let data = await directions(origin, destination, mode);
       return {success: true, data: {distance: response.data.distance, url: data.data.url, map: data.data.map}}
+    } else {
+      return {success: false, message: response.message}
     }
   }
 
@@ -38,15 +44,21 @@ export namespace Apis {
     if (response.success) {
       let data = await directions(origin, destination, mode, size);
       return {success: true, data: {distance: response.data.distance, duration: response.data.duration, url: data.data.url, map: data.data.map}}
+    } else {
+      return {success: false, message: response.message}
     }
   }
 }
 
 export namespace BlaBlaApi {
   export async function getTrips(origin: string, destination: string): Promise<BlablaResponse> {
-    let response = await axios.get(`${BLABLACAR_URL}&fn=${origin}&tn=${destination}`);
-    let trips: BlablaTrips[] = response.data.trips.slice(0, 3);
-    return {success: true, data: {trips: trips}};
+    try {
+      let response = await axios.get(`${BLABLACAR_URL}&fn=${origin}&tn=${destination}`);
+      let trips: BlablaTrips[] = response.data.trips.slice(0, 3);
+      return {success: true, data: {trips: trips}};        
+    } catch(error) {
+      return  {success: false, message: "Aucun trajet n'est disponible"}
+    }
   }
 }
 
@@ -79,13 +91,17 @@ async function directions(origin: string, destination: string, mode: string, siz
     avoid: avoid? avoid: undefined,
     departure_time: departure_time? departure_time: undefined,
   }).asPromise();
-  let path = response.json.routes[0].overview_polyline.points;
-  let map = await getStaticMap(path, size);
-  let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelmode=${mode}`)
-
-
+  
   if (response.status === "OK" || 200){
-    return {success: true, data: {map: map, url: url}}
+    if (response.json.status === "OK" || 200) {
+      let path = response.json.routes[0].overview_polyline.points;
+      let map = await getStaticMap(path, size);
+      let url = encodeURI(`${MAPS_LINK_URL}&origin=${origin}&destination=${destination}&travelmode=${mode}`)
+      
+      return {success: true, data: {map: map, url: url}}
+    } else {
+      return {success: false, message: "Aucun résultat n'a été trouvé"}
+    }
   }
   else {
     return {success: false, message: "Aucun résultat n'a été trouvé"}
