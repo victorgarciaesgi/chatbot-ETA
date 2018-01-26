@@ -9,10 +9,13 @@
       "name": "Fastest"
     },
     {
+      "name": "Hello"
+    },
+    {
       "name": "Help"
     },
     {
-      "name": "Itinairaire"
+      "name": "Itineraire"
     },
     {
       "name": "None"
@@ -38,17 +41,11 @@
       "name": "TransportModeV2",
       "subLists": [
         {
-          "canonicalForm": "uber",
-          "list": [
-            "taxi",
-            "uber"
-          ]
-        },
-        {
           "canonicalForm": "covoiturage",
           "list": [
             "blablacar",
-            "covoiturage"
+            "covoiturage",
+            "covoit"
           ]
         },
         {
@@ -95,7 +92,7 @@
     {
       "name": "From",
       "mode": true,
-      "words": "aller de,partir de,aller du,partir du,entre",
+      "words": "aller de,partir de,aller du,partir du,entre,trajet de,entre le",
       "activated": true
     },
     {
@@ -109,22 +106,47 @@
   "utterances": [
     {
       "text": "salut",
-      "intent": "Help",
+      "intent": "Hello",
       "entities": []
     },
     {
       "text": "hello",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "aide",
+      "intent": "Help",
+      "entities": []
+    },
+    {
+      "text": "help",
       "intent": "Help",
       "entities": []
     },
     {
       "text": "bonjour",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "test",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
+      "text": "aide moi",
       "intent": "Help",
       "entities": []
     },
     {
+      "text": "yo",
+      "intent": "Hello",
+      "entities": []
+    },
+    {
       "text": "hi",
-      "intent": "Help",
+      "intent": "Hello",
       "entities": []
     },
     {
@@ -391,7 +413,7 @@
     },
     {
       "text": "itineraire entre paris et marseille en velo",
-      "intent": "Itinairaire",
+      "intent": "Itineraire",
       "entities": [
         {
           "entity": "Destination",
@@ -407,7 +429,7 @@
     },
     {
       "text": "emmene moi a marseille en voiture",
-      "intent": "Itinairaire",
+      "intent": "Itineraire",
       "entities": [
         {
           "entity": "Destination",
@@ -429,6 +451,300 @@
           "entity": "Origin",
           "startPos": 35,
           "endPos": 39
+        }
+      ]
+    },
+    {
+      "text": "temps de trajet entre paris et lyon en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 31,
+          "endPos": 34
+        },
+        {
+          "entity": "Origin",
+          "startPos": 22,
+          "endPos": 26
+        }
+      ]
+    },
+    {
+      "text": "distance pour aller de paris a lyon en velo",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 31,
+          "endPos": 34
+        },
+        {
+          "entity": "Origin",
+          "startPos": 23,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "calcule moi l'itineraire entre paris et lyon en voiture",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 40,
+          "endPos": 43
+        },
+        {
+          "entity": "Origin",
+          "startPos": 31,
+          "endPos": 35
+        }
+      ]
+    },
+    {
+      "text": "distance pour aller de paris jusqu'a lyon en voiture",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 37,
+          "endPos": 40
+        },
+        {
+          "entity": "Origin",
+          "startPos": 23,
+          "endPos": 27
+        }
+      ]
+    },
+    {
+      "text": "temps pour aller du 5 avenue fosh 94340 a lyon en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 42,
+          "endPos": 45
+        },
+        {
+          "entity": "Origin",
+          "startPos": 20,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "paris lyon en voiture",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 6,
+          "endPos": 9
+        },
+        {
+          "entity": "Origin",
+          "startPos": 0,
+          "endPos": 4
+        }
+      ]
+    },
+    {
+      "text": "emmene moi du 5 avenue fosh 94340 joinville le pont au 6 avenue fosh nantes en voiture",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 55,
+          "endPos": 74
+        },
+        {
+          "entity": "Origin",
+          "startPos": 14,
+          "endPos": 50
+        }
+      ]
+    },
+    {
+      "text": "je veux aller au 676 rue jean jaures paris",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 17,
+          "endPos": 41
+        }
+      ]
+    },
+    {
+      "text": "emmene moi du 5 avenue fosh nantes au 807 boulevard des alliés 93450 marseille en voiture",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 38,
+          "endPos": 77
+        },
+        {
+          "entity": "Origin",
+          "startPos": 14,
+          "endPos": 33
+        }
+      ]
+    },
+    {
+      "text": "emmene moi de paris au 78 boulevard bite chibrale 93400 marseille en velo",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 23,
+          "endPos": 64
+        },
+        {
+          "entity": "Origin",
+          "startPos": 14,
+          "endPos": 18
+        }
+      ]
+    },
+    {
+      "text": "emmene moi du 89bis impasse bretigny joinville a paris en voiture",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 49,
+          "endPos": 53
+        },
+        {
+          "entity": "Origin",
+          "startPos": 14,
+          "endPos": 45
+        }
+      ]
+    },
+    {
+      "text": "je veux arriver le plus vite possible de paris a lyon",
+      "intent": "Fastest",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 49,
+          "endPos": 52
+        },
+        {
+          "entity": "Origin",
+          "startPos": 41,
+          "endPos": 45
+        }
+      ]
+    },
+    {
+      "text": "temps entre le 5 avenue fosh 94340 joinville a lyon en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 47,
+          "endPos": 50
+        },
+        {
+          "entity": "Origin",
+          "startPos": 15,
+          "endPos": 43
+        }
+      ]
+    },
+    {
+      "text": "temps pour aller du 5 avenue fosh 94340 au 945 boulevard charles de gaule paris 75100 en voiture",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 43,
+          "endPos": 84
+        },
+        {
+          "entity": "Origin",
+          "startPos": 20,
+          "endPos": 38
+        }
+      ]
+    },
+    {
+      "text": "temps de trajet entre le 9 avenue fosh 94340 et bordeaux",
+      "intent": "SearchTime",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 48,
+          "endPos": 55
+        },
+        {
+          "entity": "Origin",
+          "startPos": 25,
+          "endPos": 43
+        }
+      ]
+    },
+    {
+      "text": "je veux aller a nantes",
+      "intent": "Itineraire",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 16,
+          "endPos": 21
+        }
+      ]
+    },
+    {
+      "text": "distance entre saint-maur a joinville",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 28,
+          "endPos": 36
+        },
+        {
+          "entity": "Origin",
+          "startPos": 15,
+          "endPos": 24
+        }
+      ]
+    },
+    {
+      "text": "distance entre le 5 avenue krik nantes a joinville",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 41,
+          "endPos": 49
+        },
+        {
+          "entity": "Origin",
+          "startPos": 18,
+          "endPos": 37
+        }
+      ]
+    },
+    {
+      "text": "distance entre le 678 impasse rube a 927 allée des pins 94500",
+      "intent": "SearchDistance",
+      "entities": [
+        {
+          "entity": "Destination",
+          "startPos": 37,
+          "endPos": 60
+        },
+        {
+          "entity": "Origin",
+          "startPos": 18,
+          "endPos": 33
         }
       ]
     }

@@ -19,6 +19,8 @@ export function createCard(session: builder.Session, response): builder.HeroCard
 		]);
 }
 
+
+
 export async function createCarrousel(session, trips: BlablaTrips[]): Promise<builder.HeroCard[]>{
 	var carrousel = [];
 	for (let [index, element] of trips.entries()) {

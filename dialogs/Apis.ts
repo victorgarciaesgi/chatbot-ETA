@@ -62,9 +62,6 @@ export namespace BlaBlaApi {
   }
 }
 
-
-// functions
-
 async function distanceMatrix(origin: string, destination: string, mode: string, avoid?: string, departure_time?: string): Promise<ApiResponse> {
   let response = await googleMaps.distanceMatrix({
     origins: origin, 

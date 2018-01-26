@@ -1,4 +1,11 @@
-# # Chatbot ETA
+# Répartition des tâches
+
+- Victor Garcia: Partie Botbuilder/Typescript et dialogues
+- Gauthier Cornette: APIS google maps et BlablaCar, peer programming avec Victor pour l'intégration
+- Maxence Joncheray et Cyriaque Maldat: Configuration LUIS et déploiement sur les messageries
+
+
+## Chatbot ETA
 
 Chatbot donnant des itinénaires et les estimations de temps de trajets.
 Affiche les trajets disponibles en blablaCar et le prix (API blablacar)
