@@ -13,7 +13,7 @@
     "@types/axios": "^0.14.0",
     "@types/googlemaps": "^3.30.3",
     "@types/lodash": "^4.14.91",
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "botbuilder": "3.13.1",
     "concurrently": "^3.5.1",
     "dotenv-extended": "^2.0.1",
